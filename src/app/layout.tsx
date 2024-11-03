@@ -1,9 +1,9 @@
 import "@/styles/globals.css";
-
-import { GeistSans } from "geist/font/sans";
+import { Poppins } from 'next/font/google'
 import { type Metadata } from "next";
-
 import { TRPCReactProvider } from "@/trpc/react";
+
+const poppins = Poppins({ weight: ["400", "500", "600", "700"], style: "normal", variable: "--poppins" });
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -15,9 +15,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${poppins.variable}`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
+
       </body>
     </html>
   );
