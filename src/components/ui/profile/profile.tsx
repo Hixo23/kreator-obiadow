@@ -1,5 +1,5 @@
 import { type User } from "next-auth";
-import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../shadcn/avatar";
 
 export const Profile = ({ user }: { user: User }) => {
   return (

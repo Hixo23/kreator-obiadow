@@ -2,10 +2,10 @@
 
 import { Search, ChevronDown, UtensilsCrossed, LogIn, PlusCircle, Settings, Coffee, Sun, Moon, Salad } from 'lucide-react'
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/shadcn/input"
+import { Label } from "@/components/ui/shadcn/label"
+import { Button } from "@/components/ui/shadcn/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/shadcn/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/shadcn/dropdown-menu"
 import {
   Sidebar,
   SidebarContent,
@@ -27,11 +27,10 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarTrigger,
-} from '@/components/ui/sidebar'
-import { signOut, useSession } from 'next-auth/react'
+} from '@/components/ui/shadcn/sidebar'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 
-// This is sample data. Replace with your actual meal types and subcategories.
 const mealTypes = [
   {
     name: 'Breakfast',
@@ -55,9 +54,8 @@ const mealTypes = [
   }
 ]
 
-// Mock session data. Replace this with your actual authentication logic.
 
-export default function MealTypeSidebar() {
+export const MealSidebar = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const { data: session } = useSession();
   const filteredMealTypes = mealTypes.filter(mealType =>
@@ -67,22 +65,19 @@ export default function MealTypeSidebar() {
     )
   )
 
-  const handleSignIn = () => {
-    // Replace this with your actual sign-in logic
-    console.log('Sign in clicked')
+  const handleSignIn = async () => {
+    await signIn('discord');
   }
 
-  const handleSignOut = await() => {
-    signOut()
+  const handleSignOut = async () => {
+    await signOut()
   }
 
   const handleAddMeal = () => {
-    // Replace this with your actual add meal logic
     console.log('Add meal clicked')
   }
 
   const handleOpenSettings = () => {
-    // Replace this with your actual settings logic
     console.log('Settings clicked')
   }
 
@@ -92,8 +87,7 @@ export default function MealTypeSidebar() {
         <SidebarHeader>
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-2">
-              <UtensilsCrossed className="h-6 w-6" />
-              <h2 className="text-lg font-semibold">Meal Planner</h2>
+              <h2 className="text-lg text-nowrap font-semibold">Kreator obiadow</h2>
             </div>
             {session?.user ? (
               <DropdownMenu>
@@ -108,7 +102,7 @@ export default function MealTypeSidebar() {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleSignOut}>Wyloguj sie</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
