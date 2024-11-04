@@ -5,7 +5,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes"
 
-const poppins = Poppins({ weight: ["400", "500", "600", "700"], style: "normal", variable: "--poppins" });
+const poppins = Poppins({ weight: ["400", "500", "600", "700"], style: "normal", variable: "--poppins", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute='class'>
+        <ThemeProvider defaultTheme="system" enableSystem attribute='class'>
           <SessionProvider>
             <TRPCReactProvider>{children}</TRPCReactProvider>
           </SessionProvider>
