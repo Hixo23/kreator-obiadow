@@ -1,4 +1,4 @@
-import { SideBar } from "@/components/sidebar/sidebar";
+import { SideBar } from "@/components/ui/sidebar/sidebar";
 import { HydrateClient } from "@/trpc/server";
 
 export default async function Home() {
