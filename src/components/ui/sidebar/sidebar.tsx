@@ -30,33 +30,35 @@ import {
 } from '@/components/ui/shadcn/sidebar'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
+import { SettingsDialog } from '../settings-dialog/settings-dialog'
 
 const mealTypes = [
   {
-    name: 'Breakfast',
+    name: 'Sniadanie',
     icon: Coffee,
-    subcategories: ['Quick Breakfasts', 'Brunch', 'Healthy Starts']
+    subcategories: ['Szybkie sniadanie', 'Zdrowy start']
   },
   {
-    name: 'Lunch',
+    name: 'Obiad',
     icon: Sun,
-    subcategories: ['Sandwiches', 'Salads', 'Soups']
+    subcategories: ['Kanapki', 'Salatki', 'Zupy']
   },
   {
-    name: 'Dinner',
+    name: 'Kolacja',
     icon: Moon,
-    subcategories: ['Family Meals', 'Date Night', 'Quick Dinners']
+    subcategories: ['Rodzinne posilki', 'Nocna randka', 'Szybka kolacja']
   },
   {
-    name: 'Snacks',
+    name: 'Przekaski',
     icon: Salad,
-    subcategories: ['Healthy Snacks', 'Party Appetizers', 'Kids Snacks']
+    subcategories: ['Zdrowe przekaski', 'Imprezowe przekaski', 'Przekaski dla dzieci']
   }
 ]
 
 
 export const MealSidebar = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const { data: session } = useSession();
   const filteredMealTypes = mealTypes.filter(mealType =>
     mealType.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -78,7 +80,7 @@ export const MealSidebar = () => {
   }
 
   const handleOpenSettings = () => {
-    console.log('Settings clicked')
+    setIsSettingsOpen(true);
   }
 
   return (
@@ -117,7 +119,7 @@ export const MealSidebar = () => {
           <SidebarGroup>
             <form onSubmit={(e) => e.preventDefault()} className="px-4 py-2">
               <Label htmlFor="search-meals" className="sr-only">
-                Search meal types
+                Wyszukaj typ posiłku
               </Label>
               <div className="relative">
                 <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -159,29 +161,31 @@ export const MealSidebar = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton onClick={handleAddMeal}>
                   <PlusCircle className="mr-2 h-4 w-4" />
-                  Add New Meal
+                  Dodaj nowy posilek
                 </SidebarMenuButton>
+
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleOpenSettings}>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Settings
-                </SidebarMenuButton>
+                <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen}>
+
+                  <SidebarMenuButton onClick={handleOpenSettings}>
+
+                    <Settings className="mr-2 h-4 w-4" />
+                    Ustawienia
+
+                  </SidebarMenuButton>
+                </SettingsDialog>
+
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
           {session && (
             <div className="px-4 py-2 text-sm text-muted-foreground">
-              Signed in as {session.user.email}
+              Zalogowano jako {session.user.email}
             </div>
           )}
         </SidebarFooter>
       </Sidebar>
-      <div className="flex-1 p-8">
-        <SidebarTrigger />
-        <h1 className="text-2xl font-bold mb-4">Welcome to Your Meal Planner</h1>
-        <p>Select a meal type from the sidebar to view available recipes.</p>
-      </div>
-    </SidebarProvider>
+    </SidebarProvider >
   )
 }
