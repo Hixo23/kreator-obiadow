@@ -2,8 +2,6 @@
 
 import {
   Search,
-  ChevronDown,
-  UtensilsCrossed,
   LogIn,
   PlusCircle,
   Settings,
@@ -41,7 +39,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/shadcn/sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
