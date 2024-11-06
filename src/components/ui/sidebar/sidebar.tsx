@@ -71,7 +71,7 @@ const mealTypes = [
   },
 ];
 
-export const MealSidebar = () => {
+export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { data: session } = useSession();
@@ -197,6 +197,7 @@ export const MealSidebar = () => {
           )}
         </SidebarFooter>
       </Sidebar>
+      {children}
     </SidebarProvider>
   );
 };
