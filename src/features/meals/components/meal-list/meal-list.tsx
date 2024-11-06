@@ -1,8 +1,7 @@
-import { api } from "@/trpc/server";
 import { SingleMeal } from "../single-meal/single-meal";
+import { type Meal } from "@/types/types";
 
-export const MealList = async () => {
-  const meals = await api.recipe.getAll();
+export const MealList = ({ meals }: { meals: Meal[] }) => {
   return (
     <section className="container mx-auto p-4">
       <div className="flex flex-wrap gap-4">
