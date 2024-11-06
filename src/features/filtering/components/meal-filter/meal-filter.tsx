@@ -13,7 +13,7 @@ export const MealFilter = ({ meals }: { meals: Meal[] }) => {
   return (
     <div className="w-full h-1/3 flex justify-center flex-col px-24 gap-4">
       <Input className="h-16" placeholder="Wyszukaj swoj ulubiony przepis..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-      {searchTerm != "" && filteredMeals.map((meal) => <Link key={meal.id} href={`/meal/${meal.id}`}>{meal.name}</Link>)}
+      {searchTerm != "" && filteredMeals.map((meal) => <Link className="border-2 p-4 rounded-lg border-border" key={meal.id} href={`/meal/${meal.id}`}>{meal.name}</Link>)}
     </div>
   )
 
