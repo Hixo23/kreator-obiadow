@@ -39,6 +39,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/shadcn/sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
@@ -197,6 +198,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
           )}
         </SidebarFooter>
       </Sidebar>
+      <SidebarTrigger className="absolute m-4" />
       {children}
     </SidebarProvider>
   );
