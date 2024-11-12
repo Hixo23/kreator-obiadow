@@ -44,6 +44,7 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { SettingsDialog } from "@/components/settings-dialog/settings-dialog";
+import { AddNewRecipe } from "@/features/meals/components/add-new-recipe/add-new-recipe";
 
 const mealTypes = [
   {
@@ -75,6 +76,7 @@ const mealTypes = [
 export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isAddNewRecipeOpen, setIsAddNewRecipeOpen] = useState(false);
   const { data: session } = useSession();
   const filteredMealTypes = mealTypes.filter(
     (mealType) =>
@@ -173,10 +175,13 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
           <SidebarGroup>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <PlusCircle className="mr-2 h-4 w-4" />
-                  Dodaj nowy posilek
-                </SidebarMenuButton>
+                <AddNewRecipe isOpen={isAddNewRecipeOpen} setIsOpen={setIsAddNewRecipeOpen}>
+                  <SidebarMenuButton onClick={() => setIsAddNewRecipeOpen(true)}>
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Dodaj nowy posilek
+                  </SidebarMenuButton>
+                </AddNewRecipe>
+                {isAddNewRecipeOpen && "otwarte"}
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SettingsDialog
@@ -200,6 +205,6 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
       </Sidebar>
       <SidebarTrigger className="absolute m-4" />
       {children}
-    </SidebarProvider>
+    </SidebarProvider >
   );
 };

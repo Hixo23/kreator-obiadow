@@ -2,26 +2,8 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "@/server/
 import { recipes } from "@/server/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
+import { inputSchema } from "@/utils/schemas";
 
-
-const recipeDetailsSchema = z.object({
-  name: z.string(),
-  description: z.string(),
-  ingredients: z.string(),
-  preparatoryTime: z.number(),
-  portions: z.number(),
-});
-
-// Define the schema for the image
-const imageSchema = z.object({
-  file: z.instanceof(File),
-});
-
-// Combine the two into one object
-const inputSchema = z.object({
-  recipe: recipeDetailsSchema,
-  image: imageSchema,
-});
 
 export const recipeRouter = createTRPCRouter({
   create: protectedProcedure.input(inputSchema).mutation(async ({ input, ctx }) => {
