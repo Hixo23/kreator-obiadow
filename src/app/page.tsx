@@ -10,9 +10,8 @@ export default async function Home() {
       <main className="dark:text-white">
         <MealSidebar>
           <div className="flex flex-col w-full items-center">
-          <MealFilter meals={meals} />
-          <MealList meals={meals}/>
-
+            <MealFilter meals={meals} />
+            <MealList meals={meals} /> 
           </div>
         </MealSidebar>
       </main>

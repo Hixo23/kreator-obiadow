@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/shadcn/sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
-import { SettingsDialog } from "../settings-dialog/settings-dialog";
+import { SettingsDialog } from "@/components/settings-dialog/settings-dialog";
 
 const mealTypes = [
   {
@@ -120,9 +120,9 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                 variant="ghost"
                 size="sm"
                 onClick={async () => await signIn("discord")}
+                className="flex items-center justify-center"
               >
                 <LogIn className="mr-2 h-4 w-4" />
-                Zaloguj się
               </Button>
             )}
           </div>

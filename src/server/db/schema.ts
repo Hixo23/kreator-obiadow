@@ -25,6 +25,7 @@ export const recipes = createTable("recipe", {
   preparationTime: integer("preparation_time"),
   ingredients: text("ingredients"),
   portions: integer("portions"),
+  image: text("imageurl")
 });
 
 export const users = createTable("user", {

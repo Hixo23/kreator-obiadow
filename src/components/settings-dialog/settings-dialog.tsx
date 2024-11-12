@@ -6,6 +6,7 @@ import { Label } from "../shadcn/label"
 import { Switch } from "../shadcn/switch"
 import { useTheme } from "next-themes";
 import { Separator } from "../shadcn/separator";
+import { UploadButton } from "@/utils/uploadthing";
 
 export const SettingsDialog = ({ isOpen, setIsOpen, children }: { isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>, children: React.ReactNode }) => {
   const { theme, setTheme } = useTheme()
