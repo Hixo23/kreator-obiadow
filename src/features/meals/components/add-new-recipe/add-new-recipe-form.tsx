@@ -28,7 +28,7 @@ export const AddNewRecipeForm = () => {
         name: "",
         description: "",
         ingredients: [" "],
-        preparatoryTime: 0,
+        preparationTime: 0,
         portions: 0,
       },
       image: undefined,
@@ -47,7 +47,7 @@ export const AddNewRecipeForm = () => {
     formData.append('name', values.recipe.name)
     formData.append('description', values.recipe.description);
     formData.append('ingredients', values.recipe.ingredients.join(', '));
-    formData.append('preparatoryTime', values.recipe.preparatoryTime.toString());
+    formData.append('preparationTime', values.recipe.preparationTime.toString());
     formData.append('portions', values.recipe.portions.toString());
     await addRecipe(formData);
   }
@@ -88,7 +88,7 @@ export const AddNewRecipeForm = () => {
 
         <FormField
           control={form.control}
-          name="recipe.preparatoryTime"
+          name="recipe.preparationTime"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Czas przygotowania (w minutach)</FormLabel>

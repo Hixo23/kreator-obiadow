@@ -7,7 +7,7 @@ export const inputSchema = z.object({
     name: z.string(),
     description: z.string(),
     ingredients: z.array(z.string()),
-    preparatoryTime: z.coerce.number(),
+    preparationTime: z.coerce.number(),
     portions: z.coerce.number(),
   }),
   image: z.instanceof(Blob).optional(),

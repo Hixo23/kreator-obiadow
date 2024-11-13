@@ -6,7 +6,7 @@ export const SingleMeal = ({ meal }: { meal: Meal }) => {
   return <Card key={meal.id} className="overflow-hidden">
     <div className="flex flex-col h-full">
       <img
-        src={"https://rootblog.pl/wp-content/uploads/2020/04/Zaznaczenie_183.png"}
+        src={meal.image}
         alt={meal.name}
         className="w-full h-32 object-cover"
       />
