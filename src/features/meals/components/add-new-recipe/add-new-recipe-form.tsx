@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/shadcn/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,6 +18,7 @@ import { Delete } from "lucide-react";
 import { useDropzone } from "@uploadthing/react";
 import { useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { addRecipe } from "../../actions/addRecipe";
 
 export const AddNewRecipeForm = () => {
   const form = useForm<z.infer<typeof inputSchema>>({
@@ -39,13 +39,22 @@ export const AddNewRecipeForm = () => {
     name: "recipe.ingredients",
   });
 
-  function onSubmit(values: z.infer<typeof inputSchema>) {
-    console.log(values);
+
+  async function onSubmit(values: z.infer<typeof inputSchema>) {
+    if (!values.image) return;
+    const formData = new FormData();
+    formData.append('image', values.image)
+    formData.append('name', values.recipe.name)
+    formData.append('description', values.recipe.description);
+    formData.append('ingredients', values.recipe.ingredients.join(', '));
+    formData.append('preparatoryTime', values.recipe.preparatoryTime.toString());
+    formData.append('portions', values.recipe.portions.toString());
+    await addRecipe(formData);
   }
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-  }, []);
+    form.setValue('image', acceptedFiles[0])
+  }, [form]);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
     <Form {...form}>

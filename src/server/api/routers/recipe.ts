@@ -2,18 +2,26 @@ import { createTRPCRouter, publicProcedure, protectedProcedure } from "@/server/
 import { recipes } from "@/server/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
-import { inputSchema } from "@/utils/schemas";
+import { inputFormDataSchema } from "@/utils/schemas";
 
 
 export const recipeRouter = createTRPCRouter({
-  create: protectedProcedure.input(inputSchema).mutation(async ({ input, ctx }) => {
-    const { recipe, image } = input;
+  create: protectedProcedure.input(inputFormDataSchema).mutation(async ({ input, ctx }) => {
+    if (!input.image) return;
+    console.log(input.image)
+    const imageData = await ctx.utapi.uploadFiles(input.image);
 
-    const imageData = await ctx.utapi.uploadFiles(image.file);
+    if (!imageData?.data?.url) {
+      return;
+    }
 
     await ctx.db.insert(recipes).values({
-      ...recipe,
-      image: imageData.data?.url,
+      name: input.name,
+      description: input.description,
+      ingredients: input.ingredients,
+      preparationTime: input.preparationTime,
+      portions: input.portions,
+      image: imageData.data.url,
     });
 
     return { success: true };
