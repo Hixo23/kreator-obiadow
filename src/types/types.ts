@@ -5,5 +5,5 @@ export type Meal = {
   preparationTime: number | null;
   portions: number | null;
   ingredients: string | null;
-  image: string
+  image: string | null;
 }

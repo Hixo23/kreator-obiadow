@@ -19,6 +19,7 @@ import { useDropzone } from "@uploadthing/react";
 import { useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { addRecipe } from "../../actions/addRecipe";
+import { Textarea } from "@/components/ui/shadcn/textarea";
 
 export const AddNewRecipeForm = () => {
   const form = useForm<z.infer<typeof inputSchema>>({
@@ -27,34 +28,42 @@ export const AddNewRecipeForm = () => {
       recipe: {
         name: "",
         description: "",
-        ingredients: [" "],
+        ingredients: [""],
         preparationTime: 0,
         portions: 0,
+        preparationProcess: "",
       },
       image: undefined,
     },
   });
+
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "recipe.ingredients",
   });
 
-
   async function onSubmit(values: z.infer<typeof inputSchema>) {
-    if (!values.image) return;
+    const typedImg = values.image as Blob;
+    if (!typedImg) return;
     const formData = new FormData();
-    formData.append('image', values.image)
-    formData.append('name', values.recipe.name)
-    formData.append('description', values.recipe.description);
-    formData.append('ingredients', values.recipe.ingredients.join(', '));
-    formData.append('preparationTime', values.recipe.preparationTime.toString());
-    formData.append('portions', values.recipe.portions.toString());
+    formData.append("image", typedImg);
+    formData.append("name", values.recipe.name);
+    formData.append("description", values.recipe.description);
+    formData.append("ingredients", values.recipe.ingredients.join(", "));
+    formData.append(
+      "preparationTime",
+      values.recipe.preparationTime.toString(),
+    );
+    formData.append("portions", values.recipe.portions.toString());
     await addRecipe(formData);
   }
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    form.setValue('image', acceptedFiles[0])
-  }, [form]);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      form.setValue("image", acceptedFiles[0]);
+    },
+    [form],
+  );
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
     <Form {...form}>
@@ -101,6 +110,19 @@ export const AddNewRecipeForm = () => {
         />
         <FormField
           control={form.control}
+          name="recipe.preparationProcess"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Proces przygotowania</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="recipe.portions"
           render={({ field }) => (
             <FormItem>
@@ -137,7 +159,9 @@ export const AddNewRecipeForm = () => {
               />
             );
           })}
-          <Button onClick={() => append("")}>Dodaj skladnik</Button>
+          <Button type="button" onClick={() => append(" ")}>
+            Dodaj skladnik
+          </Button>
         </div>
         <FormField
           control={form.control}
