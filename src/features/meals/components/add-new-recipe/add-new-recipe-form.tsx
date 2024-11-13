@@ -14,12 +14,13 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { type z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { inputSchema } from "@/utils/schemas";
-import { Delete } from "lucide-react";
+import { Delete, Trash } from "lucide-react";
 import { useDropzone } from "@uploadthing/react";
 import { useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { addRecipe } from "../../actions/addRecipe";
 import { Textarea } from "@/components/ui/shadcn/textarea";
+import Image from "next/image";
 
 export const AddNewRecipeForm = () => {
   const form = useForm<z.infer<typeof inputSchema>>({
@@ -163,26 +164,43 @@ export const AddNewRecipeForm = () => {
             Dodaj skladnik
           </Button>
         </div>
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem
-              {...getRootProps()}
-              className={cn(
-                "group relative grid h-52 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
-                "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-              )}
+        {form.getValues("image") ? (
+          <div className="relative flex h-52 w-96">
+            <Button
+              onClick={() => form.setValue("image", undefined)}
+              className="absolute right-2 top-2"
             >
-              <FormLabel>Zdjęcie</FormLabel>
-              <FormControl>
-                <Input key={field.name} {...getInputProps()} />
-              </FormControl>
+              <Trash />
+            </Button>
+            <Image
+              src={URL.createObjectURL(form.getValues("image") as Blob)}
+              alt="Zdjęcie przepisu"
+              width={400}
+              height={200}
+            />
+          </div>
+        ) : (
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem
+                {...getRootProps()}
+                className={cn(
+                  "group relative grid h-52 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
+                  "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                )}
+              >
+                <FormLabel>Zdjęcie</FormLabel>
+                <FormControl>
+                  <Input key={field.name} {...getInputProps()} />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <Button type="submit">Dodaj</Button>
       </form>
     </Form>
