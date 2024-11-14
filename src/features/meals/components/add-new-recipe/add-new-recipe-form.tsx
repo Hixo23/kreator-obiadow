@@ -16,20 +16,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { inputSchema } from "@/utils/schemas";
 import { Delete, Trash } from "lucide-react";
 import { useDropzone } from "@uploadthing/react";
-import { useCallback } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { addRecipe } from "../../actions/addRecipe";
 import { Textarea } from "@/components/ui/shadcn/textarea";
 import Image from "next/image";
 
-export const AddNewRecipeForm = () => {
+export const AddNewRecipeForm = ({
+  setIsOpen,
+}: {
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
   const form = useForm<z.infer<typeof inputSchema>>({
     resolver: zodResolver(inputSchema),
     defaultValues: {
       recipe: {
         name: "",
         description: "",
-        ingredients: [""],
+        ingredients: [" "],
         preparationTime: 0,
         portions: 0,
         preparationProcess: "",
@@ -56,7 +60,9 @@ export const AddNewRecipeForm = () => {
       values.recipe.preparationTime.toString(),
     );
     formData.append("portions", values.recipe.portions.toString());
+    formData.append("preparationProcess", values.recipe.preparationProcess);
     await addRecipe(formData);
+    setIsOpen(false);
   }
 
   const onDrop = useCallback(

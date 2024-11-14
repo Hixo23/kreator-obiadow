@@ -24,7 +24,7 @@ export const AddNewRecipe = ({
         <DialogHeader>
           <DialogTitle>Dodaj nowy posilek!</DialogTitle>
         </DialogHeader>
-        <AddNewRecipeForm />
+        <AddNewRecipeForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );

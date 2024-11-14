@@ -9,7 +9,7 @@ import { Clock, Users } from "lucide-react";
 
 export const SingleMeal = ({ meal }: { meal: Meal }) => {
   return (
-    <Card key={meal.id} className="overflow-hidden">
+    <Card key={meal.id} className="w-56 overflow-hidden">
       <div className="flex h-full flex-col">
         <img
           src={meal.image!}
