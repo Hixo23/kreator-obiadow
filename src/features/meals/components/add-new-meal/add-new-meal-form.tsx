@@ -22,7 +22,7 @@ import { addRecipe } from "../../actions/addRecipe";
 import { Textarea } from "@/components/ui/shadcn/textarea";
 import Image from "next/image";
 
-export const AddNewRecipeForm = ({
+export const AddNewMealForm = ({
   setIsOpen,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;

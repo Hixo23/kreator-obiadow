@@ -6,9 +6,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/shadcn/dialog";
 import type { Dispatch, SetStateAction } from "react";
-import { AddNewRecipeForm } from "./add-new-recipe-form";
+import { AddNewMealForm } from "./add-new-meal-form";
 
-export const AddNewRecipe = ({
+export const AddNewMeal = ({
   isOpen,
   setIsOpen,
   children,
@@ -24,7 +24,7 @@ export const AddNewRecipe = ({
         <DialogHeader>
           <DialogTitle>Dodaj nowy posilek!</DialogTitle>
         </DialogHeader>
-        <AddNewRecipeForm setIsOpen={setIsOpen} />
+        <AddNewMealForm setIsOpen={setIsOpen} />
       </DialogContent>
     </Dialog>
   );

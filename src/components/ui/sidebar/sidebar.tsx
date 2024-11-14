@@ -44,7 +44,7 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { SettingsDialog } from "@/components/settings-dialog/settings-dialog";
-import { AddNewRecipe } from "@/features/meals/components/add-new-recipe/add-new-recipe";
+import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
 
 const mealTypes = [
   {
@@ -175,12 +175,17 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
           <SidebarGroup>
             <SidebarMenu>
               <SidebarMenuItem>
-                <AddNewRecipe isOpen={isAddNewRecipeOpen} setIsOpen={setIsAddNewRecipeOpen}>
-                  <SidebarMenuButton onClick={() => setIsAddNewRecipeOpen(true)}>
+                <AddNewMeal
+                  isOpen={isAddNewRecipeOpen}
+                  setIsOpen={setIsAddNewRecipeOpen}
+                >
+                  <SidebarMenuButton
+                    onClick={() => setIsAddNewRecipeOpen(true)}
+                  >
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Dodaj nowy posilek
                   </SidebarMenuButton>
-                </AddNewRecipe>
+                </AddNewMeal>
                 {isAddNewRecipeOpen && "otwarte"}
               </SidebarMenuItem>
               <SidebarMenuItem>
@@ -205,6 +210,6 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
       </Sidebar>
       <SidebarTrigger className="absolute m-4" />
       {children}
-    </SidebarProvider >
+    </SidebarProvider>
   );
 };
