@@ -50,7 +50,7 @@ export const Meal = ({
         </div>
         <div className="grid gap-12 md:grid-cols-2">
           <div>
-            <h2 className="mb-4 text-2xl font-semibold">Ingredients</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Składniki</h2>
             <ul className="space-y-2">
               {ingredients.map((ingredient, index) => (
                 <li key={index} className="flex items-center">
@@ -64,7 +64,9 @@ export const Meal = ({
             </ul>
           </div>
           <div>
-            <h2 className="mb-4 text-2xl font-semibold">Preparation Process</h2>
+            <h2 className="mb-4 text-2xl font-semibold">
+              Proces przygotowania
+            </h2>
             <p className="whitespace-pre-line">{preparationProcess}</p>
           </div>
         </div>
