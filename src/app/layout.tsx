@@ -1,4 +1,4 @@
-import "@/styles/globals.css";
+import "@/shared/styles/globals.css";
 import { Poppins } from "next/font/google";
 import { type Metadata } from "next";
 import { TRPCReactProvider } from "@/trpc/react";
