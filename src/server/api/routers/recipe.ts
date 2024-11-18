@@ -28,7 +28,7 @@ export const recipeRouter = createTRPCRouter({
         preparationProcess: input.preparationProcess,
         image: imageData.data.url,
         category: input.category,
-        subcategory: input.subcategory,
+        subcategory: input.subcategory.toLowerCase().replace(" ", "-"),
       };
 
       await ctx.db.insert(recipes).values(recipeData);
@@ -42,5 +42,14 @@ export const recipeRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input, ctx }) => {
       return ctx.db.select().from(recipes).where(eq(recipes.id, input.id));
+    }),
+
+  getByCategory: publicProcedure
+    .input(z.object({ category: z.string() }))
+    .query(async ({ input, ctx }) => {
+      return ctx.db
+        .select()
+        .from(recipes)
+        .where(eq(recipes.subcategory, input.category));
     }),
 });

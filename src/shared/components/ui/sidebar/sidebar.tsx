@@ -45,6 +45,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
+import Link from "next/link";
 
 export const mealTypes = [
   {
@@ -92,9 +93,9 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
         <SidebarHeader>
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-2">
-              <h2 className="text-nowrap text-lg font-semibold">
+              <Link href="/" className="text-nowrap text-lg font-semibold">
                 Kreator obiadow
-              </h2>
+              </Link>
             </div>
             {session?.user ? (
               <DropdownMenu>
@@ -158,11 +159,12 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   {mealType.subcategories.map((subcategory) => (
                     <SidebarMenuItem key={subcategory}>
                       <SidebarMenuButton asChild>
-                        <a
-                          href={`#${subcategory.toLowerCase().replace(/\s+/g, "-")}`}
+                        <Link
+                          prefetch={true}
+                          href={`/category/${subcategory.toLowerCase().replace(" ", "-")}`}
                         >
                           {subcategory}
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
