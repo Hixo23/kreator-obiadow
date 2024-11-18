@@ -10,7 +10,16 @@ const config = {
     serverActions: {
       bodySizeLimit: "3mb"
     }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "utfs.io"
+      }
+    ]
   }
+
 };
 
 export default config;

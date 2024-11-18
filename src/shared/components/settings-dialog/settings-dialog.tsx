@@ -7,11 +7,11 @@ import {
   DialogHeader,
   DialogTrigger,
   DialogTitle,
-} from "@/components/ui/shadcn/dialog";
-import { Label } from "@/components/ui/shadcn/label";
-import { Switch } from "@/components/ui/shadcn/switch";
+} from "@/shared/components/ui/shadcn/dialog";
+import { Label } from "@/shared/components/ui/shadcn/label";
+import { Switch } from "@/shared/components/ui/shadcn/switch";
 import { useTheme } from "next-themes";
-import { Separator } from "@/components/ui/shadcn/separator";
+import { Separator } from "@/shared/components/ui/shadcn/separator";
 export const SettingsDialog = ({
   isOpen,
   setIsOpen,

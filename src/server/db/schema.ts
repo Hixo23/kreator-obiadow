@@ -26,12 +26,13 @@ export const recipes = createTable("recipe", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: varchar("name", { length: 255 }).notNull(),
-  description: text("description"),
-  preparationTime: integer("preparation_time"),
-  ingredients: text("ingredients"),
-  portions: integer("portions"),
-  image: text("imageurl"),
-  preparationProcess: text("preparation_process"),
+  description: text("description").notNull(),
+  preparationTime: integer("preparation_time").notNull(),
+  ingredients: text("ingredients").notNull(),
+  portions: integer("portions").notNull(),
+  image: text("imageurl").notNull(),
+  preparationProcess: text("preparation_process").notNull(),
+  category: text("category")
 });
 
 export const users = createTable("user", {

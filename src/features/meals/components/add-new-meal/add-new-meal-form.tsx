@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/shadcn/button";
+import { Button } from "@/shared/components/ui/shadcn/button";
 import {
   Form,
   FormControl,
@@ -8,18 +8,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/shadcn/form";
-import { Input } from "@/components/ui/shadcn/input";
+} from "@/shared/components/ui/shadcn/form";
+import { Input } from "@/shared/components/ui/shadcn/input";
 import { useFieldArray, useForm } from "react-hook-form";
 import { type z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { inputSchema } from "@/utils/schemas";
+import { inputSchema } from "@/shared/utils/schemas";
 import { Delete, Trash } from "lucide-react";
 import { useDropzone } from "@uploadthing/react";
-import { Dispatch, SetStateAction, useCallback } from "react";
-import { cn } from "@/lib/utils";
+import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { cn } from "@/shared/lib/utils";
 import { addRecipe } from "../../actions/addRecipe";
-import { Textarea } from "@/components/ui/shadcn/textarea";
+import { Textarea } from "@/shared/components/ui/shadcn/textarea";
 import Image from "next/image";
 
 export const AddNewMealForm = ({
@@ -48,19 +48,19 @@ export const AddNewMealForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof inputSchema>) {
-    const typedImg = values.image as Blob;
+    const typedImg = values.image as File;
     if (!typedImg) return;
     const formData = new FormData();
     formData.append("image", typedImg);
     formData.append("name", values.recipe.name);
     formData.append("description", values.recipe.description);
     formData.append("ingredients", values.recipe.ingredients.join(", "));
-    formData.append(
-      "preparationTime",
-      values.recipe.preparationTime.toString(),
-    );
+    formData.append("preparationTime", String(values.recipe.preparationTime));
     formData.append("portions", values.recipe.portions.toString());
-    formData.append("preparationProcess", values.recipe.preparationProcess);
+    formData.append(
+      "preparationProcess",
+      String(values.recipe.preparationProcess),
+    );
     await addRecipe(formData);
     setIsOpen(false);
   }
@@ -179,7 +179,7 @@ export const AddNewMealForm = ({
               <Trash />
             </Button>
             <Image
-              src={URL.createObjectURL(form.getValues("image") as Blob)}
+              src={URL.createObjectURL(form.getValues("image") as File)}
               alt="Zdjęcie przepisu"
               width={400}
               height={200}
@@ -193,7 +193,7 @@ export const AddNewMealForm = ({
               <FormItem
                 {...getRootProps()}
                 className={cn(
-                  "group relative grid h-52 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
+                  "group relative grid h-32 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
                   "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                 )}
               >

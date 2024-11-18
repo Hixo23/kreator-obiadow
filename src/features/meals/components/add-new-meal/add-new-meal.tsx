@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/shadcn/dialog";
+} from "@/shared/components/ui/shadcn/dialog";
 import type { Dispatch, SetStateAction } from "react";
 import { AddNewMealForm } from "./add-new-meal-form";
 
@@ -20,7 +20,7 @@ export const AddNewMeal = ({
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="h-[56rem] overflow-y-auto">
+      <DialogContent className="h-[54rem] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Dodaj nowy posilek!</DialogTitle>
         </DialogHeader>

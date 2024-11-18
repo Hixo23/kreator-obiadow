@@ -6,7 +6,7 @@ import {
 import { recipes } from "@/server/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
-import { inputFormDataSchema } from "@/utils/schemas";
+import { inputFormDataSchema } from "@/shared/utils/schemas";
 
 export const recipeRouter = createTRPCRouter({
   create: protectedProcedure

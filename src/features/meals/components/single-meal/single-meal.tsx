@@ -3,14 +3,16 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/shadcn/card";
-import { type Meal } from "@/types/types";
+} from "@/shared/components/ui/shadcn/card";
+import { type Meal } from "@/shared/types/types";
 import { Clock, Users } from "lucide-react";
+import Link from "next/link";
 
 export const SingleMeal = ({ meal }: { meal: Meal }) => {
   return (
     <Card key={meal.id} className="w-56 overflow-hidden">
-      <div className="flex h-full flex-col">
+      <div className="relative flex h-full flex-col">
+        <Link href={`/meal/${meal.id}`} className="absolute h-56 w-full"></Link>
         <img
           src={meal.image!}
           alt={meal.name}

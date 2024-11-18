@@ -11,14 +11,14 @@ import {
   Salad,
 } from "lucide-react";
 
-import { Input } from "@/components/ui/shadcn/input";
-import { Label } from "@/components/ui/shadcn/label";
-import { Button } from "@/components/ui/shadcn/button";
+import { Input } from "@/shared/components/ui/shadcn/input";
+import { Label } from "@/shared/components/ui/shadcn/label";
+import { Button } from "@/shared/components/ui/shadcn/button";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/shadcn/avatar";
+} from "@/shared/components/ui/shadcn/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +26,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/shadcn/dropdown-menu";
+} from "@/shared/components/ui/shadcn/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -40,10 +40,10 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/shadcn/sidebar";
+} from "@/shared/components/ui/shadcn/sidebar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState } from "react";
-import { SettingsDialog } from "@/components/settings-dialog/settings-dialog";
+import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
 
 const mealTypes = [
