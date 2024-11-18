@@ -21,6 +21,14 @@ import { cn } from "@/shared/lib/utils";
 import { addRecipe } from "../../actions/addRecipe";
 import { Textarea } from "@/shared/components/ui/shadcn/textarea";
 import Image from "next/image";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/shadcn/select";
+import { mealTypes } from "@/shared/components/ui/sidebar/sidebar";
 
 export const AddNewMealForm = ({
   setIsOpen,
@@ -37,6 +45,8 @@ export const AddNewMealForm = ({
         preparationTime: 0,
         portions: 0,
         preparationProcess: "",
+        category: "",
+        subcategory: "",
       },
       image: undefined,
     },
@@ -61,6 +71,8 @@ export const AddNewMealForm = ({
       "preparationProcess",
       String(values.recipe.preparationProcess),
     );
+    formData.append("category", values.recipe.category);
+    formData.append("subcategory", values.recipe.subcategory);
     await addRecipe(formData);
     setIsOpen(false);
   }
@@ -170,6 +182,68 @@ export const AddNewMealForm = ({
             Dodaj skladnik
           </Button>
         </div>
+        <FormField
+          control={form.control}
+          name="recipe.category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Kategoria</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Wybierz kategorie posiłku" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {mealTypes.map((mealType) => {
+                    return (
+                      <SelectItem key={mealType.name} value={mealType.name}>
+                        {mealType.name}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {form.getValues("recipe.category") && (
+          <FormField
+            control={form.control}
+            name="recipe.subcategory"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Podkategoria</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Wybierz kategorie posiłku" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {mealTypes
+                      .find(
+                        (mealType) =>
+                          mealType.name === form.getValues("recipe.category"),
+                      )
+                      ?.subcategories.map((subcategory) => {
+                        return (
+                          <SelectItem key={subcategory} value={subcategory}>
+                            {subcategory}
+                          </SelectItem>
+                        );
+                      })}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         {form.getValues("image") ? (
           <div className="relative flex h-52 w-96">
             <Button

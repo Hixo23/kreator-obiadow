@@ -9,6 +9,8 @@ export const inputSchema = z.object({
     preparationTime: z.coerce.number(),
     portions: z.coerce.number(),
     preparationProcess: z.string(),
+    category: z.string(),
+    subcategory: z.string(),
   }),
   image: z.any().optional(),
 });
@@ -20,4 +22,6 @@ export const inputFormDataSchema = zfd.formData({
   portions: zfd.text(),
   image: zfd.file(),
   preparationProcess: zfd.text(),
+  category: zfd.text(),
+  subcategory: zfd.text(),
 });

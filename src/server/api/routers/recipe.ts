@@ -27,6 +27,8 @@ export const recipeRouter = createTRPCRouter({
         portions: Number(input.portions),
         preparationProcess: input.preparationProcess,
         image: imageData.data.url,
+        category: input.category,
+        subcategory: input.subcategory,
       };
 
       await ctx.db.insert(recipes).values(recipeData);

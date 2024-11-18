@@ -32,7 +32,8 @@ export const recipes = createTable("recipe", {
   portions: integer("portions").notNull(),
   image: text("imageurl").notNull(),
   preparationProcess: text("preparation_process").notNull(),
-  category: text("category")
+  category: text("category"),
+  subcategory: text("subcategory"),
 });
 
 export const users = createTable("user", {
