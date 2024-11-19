@@ -29,6 +29,7 @@ export const recipeRouter = createTRPCRouter({
         image: imageData.data.url,
         category: input.category,
         subcategory: input.subcategory.toLowerCase().replace(" ", "-"),
+        userId: input.userId,
       };
 
       await ctx.db.insert(recipes).values(recipeData);
@@ -52,4 +53,10 @@ export const recipeRouter = createTRPCRouter({
         .from(recipes)
         .where(eq(recipes.subcategory, input.category));
     }),
+  getByUser: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db
+      .select()
+      .from(recipes)
+      .where(eq(recipes.userId, ctx.session.user.id));
+  }),
 });

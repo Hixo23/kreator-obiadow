@@ -14,18 +14,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/shadcn/table";
+import { api } from "@/trpc/server";
 import { UtensilsCrossed, Pencil, Trash2 } from "lucide-react";
 
 const Dashboard = async () => {
+  const meals = await api.recipe.getByUser();
+  const totalMeals = meals.length;
   return (
     <div className="container mx-auto p-4">
       <header className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Meals Dashboard</h1>
+        <h1 className="text-3xl font-bold">Zarządzanie twoimi posiłkami</h1>
       </header>
       <div className="mb-6 grid gap-4 md:grid-cols-1 lg:grid-cols-1">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Meals</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Wszystkie posiłki
+            </CardTitle>
             <UtensilsCrossed className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -36,29 +41,24 @@ const Dashboard = async () => {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent Meals</CardTitle>
+          <CardTitle>Ostatnie posiłki</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Calories</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                <TableHead>Nazwa</TableHead>
+                <TableHead className="text-right">Akcje</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {meals.map((meal) => (
                 <TableRow key={meal.id}>
                   <TableCell>{meal.name}</TableCell>
-                  <TableCell>{meal.calories}</TableCell>
-                  <TableCell>{meal.date}</TableCell>
                   <TableCell className="text-right">
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleEditMeal(meal.id)}
                       aria-label={`Edit ${meal.name}`}
                     >
                       <Pencil className="h-4 w-4" />
@@ -66,7 +66,6 @@ const Dashboard = async () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleDeleteMeal(meal.id)}
                       aria-label={`Delete ${meal.name}`}
                     >
                       <Trash2 className="h-4 w-4" />

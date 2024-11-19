@@ -29,12 +29,14 @@ import {
   SelectValue,
 } from "@/shared/components/ui/shadcn/select";
 import { mealTypes } from "@/shared/components/ui/sidebar/sidebar";
+import { useSession } from "next-auth/react";
 
 export const AddNewMealForm = ({
   setIsOpen,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { data } = useSession();
   const form = useForm<z.infer<typeof inputSchema>>({
     resolver: zodResolver(inputSchema),
     defaultValues: {
@@ -47,6 +49,7 @@ export const AddNewMealForm = ({
         preparationProcess: "",
         category: "",
         subcategory: "",
+        userId: data?.user?.id ?? " ",
       },
       image: undefined,
     },
@@ -73,6 +76,7 @@ export const AddNewMealForm = ({
     );
     formData.append("category", values.recipe.category);
     formData.append("subcategory", values.recipe.subcategory);
+    formData.append("userId", data?.user.id ?? "");
     await addRecipe(formData);
     setIsOpen(false);
   }

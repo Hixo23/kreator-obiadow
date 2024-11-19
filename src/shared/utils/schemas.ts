@@ -11,6 +11,7 @@ export const inputSchema = z.object({
     preparationProcess: z.string(),
     category: z.string(),
     subcategory: z.string(),
+    userId: z.string(),
   }),
   image: z.any().optional(),
 });
@@ -24,4 +25,5 @@ export const inputFormDataSchema = zfd.formData({
   preparationProcess: zfd.text(),
   category: zfd.text(),
   subcategory: zfd.text(),
+  userId: zfd.text(),
 });
