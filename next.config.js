@@ -5,6 +5,21 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "3mb"
+    }
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "utfs.io"
+      }
+    ]
+  }
+
+};
 
 export default config;

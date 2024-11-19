@@ -16,15 +16,27 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `kreator-obiadow-v2_${name}`);
+export const createTable = pgTableCreator(
+  (name) => `kreator-obiadow-v2_${name}`,
+);
 
 export const recipes = createTable("recipe", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey().$defaultFn(() => crypto.randomUUID()),
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: varchar("name", { length: 255 }).notNull(),
-  description: text("description"),
-  preparationTime: integer("preparation_time"),
-  ingredients: text("ingredients"),
-  portions: integer("portions"),
+  description: text("description").notNull(),
+  preparationTime: integer("preparation_time").notNull(),
+  ingredients: text("ingredients").notNull(),
+  portions: integer("portions").notNull(),
+  image: text("imageurl").notNull(),
+  preparationProcess: text("preparation_process").notNull(),
+  category: text("category"),
+  subcategory: text("subcategory"),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
 });
 
 export const users = createTable("user", {
@@ -71,7 +83,7 @@ export const accounts = createTable(
       columns: [account.provider, account.providerAccountId],
     }),
     userIdIdx: index("account_user_id_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -94,7 +106,7 @@ export const sessions = createTable(
   },
   (session) => ({
     userIdIdx: index("session_user_id_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -113,5 +125,5 @@ export const verificationTokens = createTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
+  }),
 );
