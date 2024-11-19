@@ -59,4 +59,19 @@ export const recipeRouter = createTRPCRouter({
       .from(recipes)
       .where(eq(recipes.userId, ctx.session.user.id));
   }),
+
+  deleteRecipe: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const recipe = await ctx.db
+        .select()
+        .from(recipes)
+        .where(eq(recipes.id, input.id));
+      if (recipe[0]?.userId !== ctx.session.user.id)
+        return {
+          error: recipe[0]?.userId == ctx.session.user.id,
+        };
+      await ctx.db.delete(recipes).where(eq(recipes.id, input.id));
+      return { success: true };
+    }),
 });
