@@ -34,6 +34,9 @@ export const recipes = createTable("recipe", {
   preparationProcess: text("preparation_process").notNull(),
   category: text("category"),
   subcategory: text("subcategory"),
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
 });
 
 export const users = createTable("user", {
