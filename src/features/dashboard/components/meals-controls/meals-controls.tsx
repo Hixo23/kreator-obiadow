@@ -5,16 +5,26 @@ import { TableCell } from "@/shared/components/ui/shadcn/table";
 import type { Meal } from "@/shared/types/types";
 import { Pencil, Trash2 } from "lucide-react";
 import { deleteRecipe } from "../../actions/deleteRecipe";
+import { useState } from "react";
+import { EditMeal } from "../edit-meal/edit-meal";
 
 export const MealControl = ({ meal }: { meal: Meal }) => {
+  const [editOpen, setEditOpen] = useState(false);
   const handleDelete = async () => {
     await deleteRecipe({ id: meal.id });
   };
   return (
     <TableCell className="text-right">
-      <Button variant="ghost" size="icon" aria-label={`Edit ${meal.name}`}>
-        <Pencil className="h-4 w-4" />
-      </Button>
+      <EditMeal
+        isOpen={editOpen}
+        setIsOpen={setEditOpen}
+        meal={meal}
+        key={meal.id}
+      >
+        <Button variant="ghost" size="icon" aria-label={`Edit ${meal.name}`}>
+          <Pencil className="h-4 w-4" />
+        </Button>
+      </EditMeal>
       <Button
         onClick={handleDelete}
         variant="ghost"

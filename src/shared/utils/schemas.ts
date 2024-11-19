@@ -16,14 +16,28 @@ export const inputSchema = z.object({
   image: z.any().optional(),
 });
 export const inputFormDataSchema = zfd.formData({
+  id: zfd.text().optional(),
   name: zfd.text(),
   description: zfd.text(),
   ingredients: zfd.text(),
   preparationTime: zfd.text(),
   portions: zfd.text(),
-  image: zfd.file(),
+  image: zfd.file().or(zfd.text()),
   preparationProcess: zfd.text(),
   category: zfd.text(),
   subcategory: zfd.text(),
   userId: zfd.text(),
+});
+
+export const inputEditRecipeFormData = zfd.formData({
+  id: zfd.text(),
+  name: zfd.text(),
+  description: zfd.text(),
+  ingredients: zfd.text(),
+  preparationTime: zfd.text(),
+  portions: zfd.text(),
+  image: zfd.file().or(zfd.text()),
+  preparationProcess: zfd.text(),
+  category: zfd.text(),
+  subcategory: zfd.text(),
 });

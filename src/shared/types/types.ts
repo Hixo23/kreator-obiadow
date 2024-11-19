@@ -6,4 +6,8 @@ export type Meal = {
   portions: number | null;
   ingredients: string | null;
   image: string | null;
-}
+  userId: string;
+  preparationProcess: string;
+  category: string | null;
+  subcategory: string | null;
+};

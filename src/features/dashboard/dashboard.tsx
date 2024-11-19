@@ -1,4 +1,3 @@
-import { Button } from "@/shared/components/ui/shadcn/button";
 import {
   Card,
   CardContent,
@@ -15,7 +14,7 @@ import {
   TableRow,
 } from "@/shared/components/ui/shadcn/table";
 import type { Meal } from "@/shared/types/types";
-import { UtensilsCrossed, Pencil, Trash2 } from "lucide-react";
+import { UtensilsCrossed } from "lucide-react";
 import { MealControl } from "./components/meals-controls/meals-controls";
 
 export const Dashboard = ({ meals }: { meals: Meal[] }) => {
