@@ -8,18 +8,17 @@ import "./src/env.js";
 const config = {
   experimental: {
     serverActions: {
-      bodySizeLimit: "3mb"
-    }
+      bodySizeLimit: "30mb",
+    },
   },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "utfs.io"
-      }
-    ]
-  }
-
+        hostname: "utfs.io",
+      },
+    ],
+  },
 };
 
 export default config;
