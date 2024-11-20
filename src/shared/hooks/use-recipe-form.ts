@@ -77,7 +77,10 @@ export const useRecipeForm = ({
     },
     [form],
   );
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { "image/*": ["jpg", "jpeg", "png"] },
+  });
 
   return {
     form,
