@@ -176,20 +176,21 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
         <SidebarFooter className="border-t">
           <SidebarGroup>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <AddNewMeal
-                  isOpen={isAddNewRecipeOpen}
-                  setIsOpen={setIsAddNewRecipeOpen}
-                >
-                  <SidebarMenuButton
-                    onClick={() => setIsAddNewRecipeOpen(true)}
+              {session?.user.id && (
+                <SidebarMenuItem>
+                  <AddNewMeal
+                    isOpen={isAddNewRecipeOpen}
+                    setIsOpen={setIsAddNewRecipeOpen}
                   >
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Dodaj nowy posilek
-                  </SidebarMenuButton>
-                </AddNewMeal>
-                {isAddNewRecipeOpen && "otwarte"}
-              </SidebarMenuItem>
+                    <SidebarMenuButton
+                      onClick={() => setIsAddNewRecipeOpen(true)}
+                    >
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      Dodaj przepis
+                    </SidebarMenuButton>
+                  </AddNewMeal>
+                </SidebarMenuItem>
+              )}
               <SidebarMenuItem>
                 <SettingsDialog
                   isOpen={isSettingsOpen}
