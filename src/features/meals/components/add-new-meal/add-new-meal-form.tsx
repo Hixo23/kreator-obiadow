@@ -10,15 +10,9 @@ import {
   FormMessage,
 } from "@/shared/components/ui/shadcn/form";
 import { Input } from "@/shared/components/ui/shadcn/input";
-import { useFieldArray, useForm } from "react-hook-form";
-import { type z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { inputSchema } from "@/shared/utils/schemas";
 import { Delete, Trash } from "lucide-react";
-import { useDropzone } from "@uploadthing/react";
-import { type Dispatch, type SetStateAction, useCallback } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import { cn } from "@/shared/lib/utils";
-import { addRecipe } from "../../actions/addRecipe";
 import { Textarea } from "@/shared/components/ui/shadcn/textarea";
 import Image from "next/image";
 import {
@@ -29,65 +23,26 @@ import {
   SelectValue,
 } from "@/shared/components/ui/shadcn/select";
 import { mealTypes } from "@/shared/components/ui/sidebar/sidebar";
-import { useSession } from "next-auth/react";
+import { useRecipeForm } from "@/shared/hooks/use-recipe-form";
 
 export const AddNewMealForm = ({
   setIsOpen,
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { data } = useSession();
-  const form = useForm<z.infer<typeof inputSchema>>({
-    resolver: zodResolver(inputSchema),
-    defaultValues: {
-      recipe: {
-        name: "",
-        description: "",
-        ingredients: [" "],
-        preparationTime: 0,
-        portions: 0,
-        preparationProcess: "",
-        category: "",
-        subcategory: "",
-        userId: data?.user?.id ?? " ",
-      },
-      image: undefined,
-    },
-  });
+  const {
+    form,
+    append,
+    fields,
+    getInputProps,
+    getRootProps,
+    onSubmit,
+    remove,
+  } = useRecipeForm({ action: "create", setIsOpen });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "recipe.ingredients",
-  });
-
-  async function onSubmit(values: z.infer<typeof inputSchema>) {
-    const typedImg = values.image as File;
-    if (!typedImg) return;
-    const formData = new FormData();
-    formData.append("image", typedImg);
-    formData.append("name", values.recipe.name);
-    formData.append("description", values.recipe.description);
-    formData.append("ingredients", values.recipe.ingredients.join(", "));
-    formData.append("preparationTime", String(values.recipe.preparationTime));
-    formData.append("portions", values.recipe.portions.toString());
-    formData.append(
-      "preparationProcess",
-      String(values.recipe.preparationProcess),
-    );
-    formData.append("category", values.recipe.category);
-    formData.append("subcategory", values.recipe.subcategory);
-    formData.append("userId", data?.user.id ?? "");
-    await addRecipe(formData);
-    setIsOpen(false);
-  }
-
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      form.setValue("image", acceptedFiles[0]);
-    },
-    [form],
-  );
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  useEffect(() => {
+    return form.setValue("recipe.subcategory", "");
+  }, [form.watch("recipe.category")]);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -212,17 +167,14 @@ export const AddNewMealForm = ({
             </FormItem>
           )}
         />
-        {form.getValues("recipe.category") && (
+        {form.getValues("recipe.category") !== "" && (
           <FormField
             control={form.control}
             name="recipe.subcategory"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Podkategoria</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Wybierz kategorie posiłku" />

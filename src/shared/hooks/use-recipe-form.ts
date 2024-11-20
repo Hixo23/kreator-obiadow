@@ -46,6 +46,7 @@ export const useRecipeForm = ({
 
   async function onSubmit(values: z.infer<typeof inputSchema>) {
     const typedImg = values.image as File;
+    console.log("fajnie");
     if (!typedImg) return;
     const formData = new FormData();
     formData.append("image", typedImg);
@@ -63,9 +64,9 @@ export const useRecipeForm = ({
     formData.append("userId", data?.user.id ?? "");
     if (action === "update") formData.append("id", meal?.id ?? "");
     if (action === "create") {
-      console.log(await addRecipe(formData));
+      await addRecipe(formData);
     } else {
-      console.log(await updateRecipe(formData));
+      await updateRecipe(formData);
     }
     setIsOpen(false);
   }

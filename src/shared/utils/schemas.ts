@@ -3,15 +3,29 @@ import { zfd } from "zod-form-data";
 
 export const inputSchema = z.object({
   recipe: z.object({
-    name: z.string(),
-    description: z.string(),
-    ingredients: z.array(z.string()),
-    preparationTime: z.coerce.number(),
-    portions: z.coerce.number(),
-    preparationProcess: z.string(),
-    category: z.string(),
-    subcategory: z.string(),
-    userId: z.string(),
+    name: z
+      .string()
+      .min(4, { message: "Nazwa przepisu musi mieć co najmniej 4 znaki" }),
+    description: z
+      .string()
+      .min(10, { message: "Opis przepisu musi mieć co najmniej 10 znaków" }),
+    ingredients: z
+      .array(z.string())
+      .min(1, { message: "Przepis musi zawierać co najmniej jeden składnik" }),
+    preparationTime: z.coerce
+      .number()
+      .min(1, { message: "Czas przygotowania musi być większy od 0" }),
+    portions: z.coerce
+      .number()
+      .min(1, { message: "Porcje muszą być większe od 0" }),
+    preparationProcess: z.string().min(10, {
+      message: "Proces przygotowania musi miec co najmniej 10 znakow",
+    }),
+    category: z.string().min(1, { message: "Kategoria nie może być pusta" }),
+    subcategory: z
+      .string()
+      .min(1, { message: "Podkategoria nie może być pusta" }),
+    userId: z.string().optional(),
   }),
   image: z.any().optional(),
 });
