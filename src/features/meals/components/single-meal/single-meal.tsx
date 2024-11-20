@@ -23,7 +23,9 @@ export const SingleMeal = ({ meal }: { meal: Meal }) => {
           <CardTitle className="text-sm">{meal.name}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-grow flex-col p-3 pt-0">
-          <p className="mb-2 text-xs text-gray-500">{meal.description}</p>
+          <p className="mb-2 h-16 overflow-hidden text-ellipsis text-xs text-gray-500">
+            {meal.description}
+          </p>
           <div className="mt-auto flex items-center justify-between text-xs text-gray-400">
             <div className="flex items-center">
               <Clock className="mr-1 h-3 w-3" />
