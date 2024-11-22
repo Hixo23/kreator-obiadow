@@ -113,6 +113,11 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard">Zarządzaj posiłkami</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
                   <DropdownMenuItem onClick={async () => signOut()}>
                     Wyloguj sie
                   </DropdownMenuItem>
@@ -125,7 +130,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                 onClick={async () => await signIn("discord")}
                 className="flex items-center justify-center"
               >
-                <LogIn className="mr-2 h-4 w-4" />
+                <LogIn className="h-4 w-4" />
               </Button>
             )}
           </div>
