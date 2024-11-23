@@ -3,13 +3,13 @@
 import { useCallback, type Dispatch, type SetStateAction } from "react";
 import type { Meal } from "../types/types";
 import { useFieldArray, useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import { inputSchema } from "../utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { addRecipe } from "@/features/meals/actions/addRecipe";
 import { useDropzone } from "@uploadthing/react";
 import { updateRecipe } from "@/features/dashboard/actions/updateRecipe";
+import { useUser } from "@clerk/nextjs";
 
 export const useRecipeForm = ({
   action,
@@ -20,7 +20,7 @@ export const useRecipeForm = ({
   meal?: Meal;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const { data } = useSession();
+  const { user } = useUser();
   const form = useForm<z.infer<typeof inputSchema>>({
     resolver: zodResolver(inputSchema),
     defaultValues: {
@@ -61,7 +61,7 @@ export const useRecipeForm = ({
     );
     formData.append("category", values.recipe.category);
     formData.append("subcategory", values.recipe.subcategory);
-    formData.append("userId", data?.user.id ?? "");
+    formData.append("userId", user?.id ?? "");
     if (action === "update") formData.append("id", meal?.id ?? "");
     if (action === "create") {
       await addRecipe(formData);
