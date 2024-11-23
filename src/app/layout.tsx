@@ -2,10 +2,9 @@ import "@/shared/styles/globals.css";
 import { Poppins } from "next/font/google";
 import { type Metadata } from "next";
 import { TRPCReactProvider } from "@/trpc/react";
-import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
-import { MealSidebar } from "@/shared/components/ui/sidebar/sidebar";
-
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   style: "normal",
@@ -25,11 +24,13 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-          <SessionProvider>
+          <ClerkProvider appearance={{
+            baseTheme: dark
+          }}>
             <TRPCReactProvider>
-              <MealSidebar>{children}</MealSidebar>
+              {children}
             </TRPCReactProvider>
-          </SessionProvider>
+          </ClerkProvider>
         </ThemeProvider>
       </body>
     </html>

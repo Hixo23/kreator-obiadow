@@ -41,7 +41,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/shared/components/ui/shadcn/sidebar";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { SignOutButton, useSession } from "@clerk/nextjs";
 import { useState } from "react";
 import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
@@ -78,7 +78,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAddNewRecipeOpen, setIsAddNewRecipeOpen] = useState(false);
-  const { data: session } = useSession();
+  const { session } = useSession();
   const filteredMealTypes = mealTypes.filter(
     (mealType) =>
       mealType.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -103,18 +103,25 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   <Button variant="ghost" className="h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src={session.user.image!}
-                        alt={session.user.name!}
+                        src={session.user.imageUrl}
+                        alt={session.user.username!}
                       />
-                      <AvatarFallback>{session.user.name!}</AvatarFallback>
+                      <AvatarFallback>{session.user.username!}</AvatarFallback>
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
+                  <DropdownMenuLabel>{session.user.username}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={async () => signOut()}>
-                    Wyloguj sie
+                  <DropdownMenuItem asChild>
+                    <Link href="/dashboard">Zarządzaj posiłkami</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuItem asChild>
+                    <SignOutButton>
+                      Wyloguj sie
+                    </SignOutButton>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -122,10 +129,13 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={async () => await signIn("discord")}
+                asChild
                 className="flex items-center justify-center"
               >
-                <LogIn className="mr-2 h-4 w-4" />
+                <Link href={'/sign-in'}>
+
+                  <LogIn className="h-4 w-4" />
+                </Link>
               </Button>
             )}
           </div>
@@ -206,7 +216,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
           </SidebarGroup>
           {session && (
             <div className="px-4 py-2 text-sm text-muted-foreground">
-              Zalogowano jako {session.user.email}
+              Zalogowano jako {session.user.emailAddresses[0]?.emailAddress}
             </div>
           )}
         </SidebarFooter>
