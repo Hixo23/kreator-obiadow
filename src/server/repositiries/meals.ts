@@ -19,7 +19,7 @@ const insert = async (formData: FormData): Promise<void> => {
         ingredients: parsed.data.ingredients,
         preparationProcess: parsed.data.preparationProcess,
         category: parsed.data.category,
-        subcategory: parsed.data.subcategory,
+        subcategory: parsed.data.subcategory.toLowerCase().split(" ").join("-"),
         userId: parsed.data.userId,
       };
       await db.insert(recipes).values(meal);
@@ -50,7 +50,7 @@ const update = async (formData: FormData): Promise<void> => {
         ingredients: parsed.data.ingredients,
         preparationProcess: parsed.data.preparationProcess,
         category: parsed.data.category,
-        subcategory: parsed.data.subcategory,
+        subcategory: parsed.data.subcategory.toLowerCase().split(" ").join("-"),
         userId: parsed.data.userId,
         id: parsed.data.id,
       };
@@ -73,6 +73,12 @@ const findMany = async () => {
   return await db.query.recipes.findMany();
 };
 
+const findByCategory = async (category: string) => {
+  return await db.query.recipes.findMany({
+    where: eq(recipes.subcategory, category),
+  });
+};
+
 const remove = async (id: string) => {
   await db.delete(recipes).where(eq(recipes.id, id));
 };
@@ -82,5 +88,6 @@ export const mealRepository = {
   update,
   findOne,
   findMany,
+  findByCategory,
   remove,
 };
