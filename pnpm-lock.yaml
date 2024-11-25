@@ -62,15 +62,6 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.61.0
         version: 5.61.0(react@18.3.1)
-      '@trpc/client':
-        specifier: 11.0.0-rc.638
-        version: 11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@trpc/react-query':
-        specifier: 11.0.0-rc.638
-        version: 11.0.0-rc.638(@tanstack/react-query@5.61.0(react@18.3.1))(@trpc/client@11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@trpc/server':
-        specifier: 11.0.0-rc.638
-        version: 11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@uploadthing/react':
         specifier: ^7.1.1
         version: 7.1.1(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.3.0(express@4.21.1)(fastify@5.1.0)(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.15))
@@ -95,6 +86,9 @@ importers:
       next:
         specifier: ^15.0.3
         version: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-safe-action:
+        specifier: ^7.9.9
+        version: 7.9.9(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
       next-themes:
         specifier: ^0.4.3
         version: 0.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2319,26 +2313,6 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@trpc/client@11.0.0-rc.638':
-    resolution: {integrity: sha512-zKOZZwUMcF4cvm04aawG7dP6M9dCs7FEWHuiBy7xmU+RIonsgpolLMRXm7bFie5EhQOGizhLRGnhneGwjNzWMA==}
-    peerDependencies:
-      '@trpc/server': 11.0.0-rc.638+09a76869e
-
-  '@trpc/react-query@11.0.0-rc.638':
-    resolution: {integrity: sha512-DiNfWXQ6FEedUbn9YzxSlIeAv17mYHUwUMPdQBgcvfWBviNQZoeyXWAsjq9LD+DVsfNfmcS6aSD+Y4KG4P4lcA==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.59.15
-      '@trpc/client': 11.0.0-rc.638+09a76869e
-      '@trpc/server': 11.0.0-rc.638+09a76869e
-      react: '>=18.2.0'
-      react-dom: '>=18.2.0'
-
-  '@trpc/server@11.0.0-rc.638':
-    resolution: {integrity: sha512-ho3sRx66UuncKTtuy7UKbYP8IB4qaPj2gmdDIIdQOftta1oYzEsQuYiBozQAIAmX9TbV5FaqAdBUl2alFBSbdg==}
-
-  '@types/aws-lambda@8.10.145':
-    resolution: {integrity: sha512-dtByW6WiFk5W5Jfgz1VM+YPA21xMXTuSFoLYIDY0L44jDLLflVPtZkYuu3/YxpGcvjzKFBZLU+GyKjR0HOYtyw==}
-
   '@types/eslint@8.56.12':
     resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
 
@@ -3688,6 +3662,27 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
 
+  next-safe-action@7.9.9:
+    resolution: {integrity: sha512-wFKKCgfHNsObfbDrbOQV8WAE6RnVx7dwmuUazqdNaTL3ZdDzUlRTnIIVI36qSjmgA3zwwxj3nvfxgK9d0fWr5w==}
+    engines: {node: '>=18.17'}
+    peerDependencies:
+      '@sinclair/typebox': '>= 0.33.3'
+      next: '>= 14.0.0'
+      react: '>= 18.2.0'
+      react-dom: '>= 18.2.0'
+      valibot: '>= 0.36.0'
+      yup: '>= 1.0.0'
+      zod: '>= 3.0.0'
+    peerDependenciesMeta:
+      '@sinclair/typebox':
+        optional: true
+      valibot:
+        optional: true
+      yup:
+        optional: true
+      zod:
+        optional: true
+
   next-themes@0.4.3:
     resolution: {integrity: sha512-nG84VPkTdUHR2YeD89YchvV4I9RbiMAql3GiLEQlPvq1ioaqPaIReK+yMRdg/zgiXws620qS1rU30TiWmmG9lA==}
     peerDependencies:
@@ -4571,18 +4566,6 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
-
-  ws@8.18.0:
-    resolution: {integrity: sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
 
   yaml@2.6.1:
     resolution: {integrity: sha512-7r0XPzioN/Q9kXBro/XPnA6kznR73DHq+GXh5ON7ZozRO6aMjbmiBuKste2wslTFkC5d1dw0GooOCepZXJ2SAg==}
@@ -7438,41 +7421,6 @@ snapshots:
       '@tanstack/query-core': 5.60.6
       react: 18.3.1
 
-  '@trpc/client@11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
-    dependencies:
-      '@trpc/server': 11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-
-  '@trpc/react-query@11.0.0-rc.638(@tanstack/react-query@5.61.0(react@18.3.1))(@trpc/client@11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@tanstack/react-query': 5.61.0(react@18.3.1)
-      '@trpc/client': 11.0.0-rc.638(@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
-      '@trpc/server': 11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
-  '@trpc/server@11.0.0-rc.638(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    optionalDependencies:
-      '@types/aws-lambda': 8.10.145
-      express: 4.21.1
-      fastify: 5.1.0
-      next: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      ws: 8.18.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - babel-plugin-macros
-      - babel-plugin-react-compiler
-      - bufferutil
-      - react
-      - react-dom
-      - sass
-      - supports-color
-      - utf-8-validate
-
-  '@types/aws-lambda@8.10.145':
-    optional: true
-
   '@types/eslint@8.56.12':
     dependencies:
       '@types/estree': 1.0.6
@@ -9014,6 +8962,14 @@ snapshots:
   negotiator@0.6.3:
     optional: true
 
+  next-safe-action@7.9.9(next@15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8):
+    dependencies:
+      next: 15.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      zod: 3.23.8
+
   next-themes@0.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
@@ -9950,9 +9906,6 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
-
-  ws@8.18.0:
-    optional: true
 
   yaml@2.6.1: {}
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Input } from "@/shared/components/ui/shadcn/input";
 import { type Meal } from "@/shared/types/types";
 import { Search, X } from "lucide-react";
@@ -16,22 +16,6 @@ export const MealFilter = ({ meals }: { meals: Meal[] }) => {
       meal?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       meal.description?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node)
-      ) {
-        setIsFocused(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className="flex w-full flex-col justify-center gap-4 px-4 py-8 md:px-24">

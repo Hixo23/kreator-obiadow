@@ -4,14 +4,14 @@ import { Button } from "@/shared/components/ui/shadcn/button";
 import { TableCell } from "@/shared/components/ui/shadcn/table";
 import type { Meal } from "@/shared/types/types";
 import { Pencil, Trash2 } from "lucide-react";
-import { deleteRecipe } from "../../actions/deleteRecipe";
+import { deleteMeal } from "../../actions/deleteMeal";
 import { useState } from "react";
 import { EditMeal } from "../edit-meal/edit-meal";
 
 export const MealControl = ({ meal }: { meal: Meal }) => {
   const [editOpen, setEditOpen] = useState(false);
   const handleDelete = async () => {
-    await deleteRecipe({ id: meal.id });
+    await deleteMeal({ id: meal.id });
   };
   return (
     <TableCell className="text-right">

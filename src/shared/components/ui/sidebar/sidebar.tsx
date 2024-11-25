@@ -118,10 +118,8 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem asChild>
-                    <SignOutButton>
-                      Wyloguj sie
-                    </SignOutButton>
+                  <DropdownMenuItem className="w-full" asChild>
+                    <SignOutButton>Wyloguj sie</SignOutButton>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -132,8 +130,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                 asChild
                 className="flex items-center justify-center"
               >
-                <Link href={'/sign-in'}>
-
+                <Link href={"/sign-in"}>
                   <LogIn className="h-4 w-4" />
                 </Link>
               </Button>
@@ -171,7 +168,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                       <SidebarMenuButton asChild>
                         <Link
                           prefetch={true}
-                          href={`/category/${subcategory.toLowerCase().replace(" ", "-")}`}
+                          href={`/category/${subcategory.toLowerCase().split(" ").join("-")}`}
                         >
                           {subcategory}
                         </Link>
