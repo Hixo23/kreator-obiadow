@@ -1,3 +1,4 @@
+import { SuperLink } from "@/shared/components/super-link/super-link";
 import {
   Card,
   CardContent,
@@ -6,13 +7,15 @@ import {
 } from "@/shared/components/ui/shadcn/card";
 import { type Meal } from "@/shared/types/types";
 import { Clock, Users } from "lucide-react";
-import Link from "next/link";
 
 export const SingleMeal = ({ meal }: { meal: Meal }) => {
   return (
     <Card key={meal.id} className="w-56 overflow-hidden">
       <div className="relative flex h-full flex-col">
-        <Link href={`/meal/${meal.id}`} className="absolute h-56 w-full"></Link>
+        <SuperLink
+          href={`/meal/${meal.id}`}
+          className="absolute h-56 w-full"
+        ></SuperLink>
         <img
           src={meal.image!}
           alt={meal.name}

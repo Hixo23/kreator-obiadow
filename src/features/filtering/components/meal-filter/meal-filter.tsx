@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Input } from "@/shared/components/ui/shadcn/input";
 import { type Meal } from "@/shared/types/types";
 import { Search, X } from "lucide-react";
-import Link from "next/link";
+import { SuperLink } from "@/shared/components/super-link/super-link";
 
 export const MealFilter = ({ meals }: { meals: Meal[] }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,7 +43,7 @@ export const MealFilter = ({ meals }: { meals: Meal[] }) => {
         <div className="mt-2 max-h-60 overflow-y-auto rounded-lg border border-border bg-background shadow-lg">
           {filteredMeals.length > 0 ? (
             filteredMeals.map((meal) => (
-              <Link
+              <SuperLink
                 key={meal.id}
                 href={`/meal/${meal.id}`}
                 className="block px-4 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
@@ -54,7 +54,7 @@ export const MealFilter = ({ meals }: { meals: Meal[] }) => {
                     {meal.description.substring(0, 50)}...
                   </div>
                 )}
-              </Link>
+              </SuperLink>
             ))
           ) : (
             <div className="px-4 py-2 text-muted-foreground">
