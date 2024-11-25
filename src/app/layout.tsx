@@ -5,6 +5,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { plPL } from "@clerk/localizations"
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   style: "normal",
@@ -24,7 +25,7 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-          <ClerkProvider appearance={{
+          <ClerkProvider localization={plPL} appearance={{
             baseTheme: dark
           }}>
             <TRPCReactProvider>
