@@ -1,11 +1,7 @@
 import "@/shared/styles/globals.css";
 import { Poppins } from "next/font/google";
 import { type Metadata } from "next";
-import { TRPCReactProvider } from "@/trpc/react";
-import { ThemeProvider } from "next-themes";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
-import { plPL } from "@clerk/localizations"
+import { Providers } from "@/providers";
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   style: "normal",
@@ -24,15 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-          <ClerkProvider localization={plPL} appearance={{
-            baseTheme: dark
-          }}>
-            <TRPCReactProvider>
-              {children}
-            </TRPCReactProvider>
-          </ClerkProvider>
-        </ThemeProvider>
+        <Providers>
+          <p>elorzelo</p>
+          {children}
+        </Providers>
       </body>
     </html>
   );

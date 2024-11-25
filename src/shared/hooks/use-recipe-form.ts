@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { addRecipe } from "@/features/meals/actions/addRecipe";
 import { useDropzone } from "@uploadthing/react";
-import { updateRecipe } from "@/features/dashboard/actions/updateRecipe";
+import { updateMeal } from "@/features/dashboard/actions/updateMeal";
 import { useUser } from "@clerk/nextjs";
 
 export const useRecipeForm = ({
@@ -66,7 +66,7 @@ export const useRecipeForm = ({
     if (action === "create") {
       await addRecipe(formData);
     } else {
-      await updateRecipe(formData);
+      await updateMeal(formData);
     }
     setIsOpen(false);
   }

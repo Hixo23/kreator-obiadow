@@ -1,8 +1,8 @@
 import { Dashboard } from "@/features/dashboard/dashboard";
-import { api } from "@/trpc/server";
+import { mealRepository } from "@/server/repositiries/meals";
 
 const DashboardPage = async () => {
-  const meals = await api.recipe.getByUser();
+  const meals = await mealRepository.findMany();
   return <Dashboard meals={meals} />;
 };
 
