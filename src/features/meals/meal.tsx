@@ -2,8 +2,10 @@ import Image from "next/image";
 import { Clock, Users } from "lucide-react";
 
 import { Badge } from "@/shared/components/ui/shadcn/badge";
+import { CommentsSection } from "../comments/components/comments";
 
 export interface MealProps {
+  id: string
   name: string;
   description: string;
   image: string;
@@ -14,6 +16,7 @@ export interface MealProps {
 }
 
 export const Meal = ({
+  id,
   name,
   description,
   image,
@@ -71,6 +74,7 @@ export const Meal = ({
           </div>
         </div>
       </div>
+      <CommentsSection postId={id} />
     </div>
   );
 };

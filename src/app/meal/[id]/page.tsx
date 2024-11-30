@@ -19,6 +19,7 @@ const MealPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     portions: meal.portions,
     ingredients: meal.ingredients.split(","),
     preparationProcess: meal.preparationProcess,
+    id: (await params).id
   };
 
   return <MealComponent {...mealData} />;
