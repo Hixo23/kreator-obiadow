@@ -55,3 +55,8 @@ export const inputEditRecipeFormData = zfd.formData({
   category: zfd.text(),
   subcategory: zfd.text(),
 });
+
+export const addCommentSchema = z.object({
+  content: z.string(),
+  postId: z.string()
+})

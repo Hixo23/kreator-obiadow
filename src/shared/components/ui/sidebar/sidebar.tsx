@@ -45,7 +45,7 @@ import { SignOutButton, useSession } from "@clerk/nextjs";
 import { useState } from "react";
 import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
-import Link from "next/link";
+import { SuperLink } from "../../super-link/super-link";
 
 export const mealTypes = [
   {
@@ -93,9 +93,9 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
         <SidebarHeader>
           <div className="flex items-center justify-between px-4 py-2">
             <div className="flex items-center gap-2">
-              <Link href="/" className="text-nowrap text-lg font-semibold">
+              <SuperLink href="/" className="text-nowrap text-lg font-semibold">
                 Kreator obiadow
-              </Link>
+              </SuperLink>
             </div>
             {session?.user ? (
               <DropdownMenu>
@@ -114,7 +114,7 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   <DropdownMenuLabel>{session.user.username}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard">Zarządzaj posiłkami</Link>
+                    <SuperLink href="/dashboard">Zarządzaj posiłkami</SuperLink>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
@@ -130,9 +130,9 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                 asChild
                 className="flex items-center justify-center"
               >
-                <Link href={"/sign-in"}>
+                <SuperLink href={"/sign-in"}>
                   <LogIn className="h-4 w-4" />
-                </Link>
+                </SuperLink>
               </Button>
             )}
           </div>
@@ -166,12 +166,11 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   {mealType.subcategories.map((subcategory) => (
                     <SidebarMenuItem key={subcategory}>
                       <SidebarMenuButton asChild>
-                        <Link
-                          prefetch={true}
+                        <SuperLink
                           href={`/category/${subcategory.toLowerCase().split(" ").join("-")}`}
                         >
                           {subcategory}
-                        </Link>
+                        </SuperLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
