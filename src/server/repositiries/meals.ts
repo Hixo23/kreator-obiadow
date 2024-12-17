@@ -74,7 +74,6 @@ const findMany = async () => {
 };
 
 const findByUser = async (userId: string) => {
-  console.log(userId)
   const userRecipes = await db.select().from(recipes).where(eq(recipes.userId, userId))
   return userRecipes
 }

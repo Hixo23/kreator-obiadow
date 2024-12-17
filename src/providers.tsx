@@ -14,7 +14,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
     setTheme(actualTheme ?? "system");
   }, [setTheme]);
 
-  console.log(theme);
   return (
     <ThemeProvider defaultTheme="system" enableSystem attribute="class">
       <ClerkProvider
