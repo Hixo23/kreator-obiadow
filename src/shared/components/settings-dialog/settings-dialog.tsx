@@ -21,7 +21,7 @@ export const SettingsDialog = ({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   children: React.ReactNode;
 }) => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -34,8 +34,8 @@ export const SettingsDialog = ({
         <div className="flex gap-4">
           <Label>Tryb ciemny</Label>
           <Switch
-            checked={theme == "dark" ? true : false}
-            onCheckedChange={() => setTheme(theme == "dark" ? "light" : "dark")}
+            checked={resolvedTheme == "dark" ? true : false}
+            onCheckedChange={() => setTheme(resolvedTheme == "dark" ? "light" : "dark")}
           />
         </div>
       </DialogContent>
