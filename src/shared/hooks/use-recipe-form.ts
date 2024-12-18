@@ -46,7 +46,6 @@ export const useRecipeForm = ({
 
   async function onSubmit(values: z.infer<typeof inputSchema>) {
     const typedImg = values.image as File;
-    console.log("fajnie");
     if (!typedImg) return;
     const formData = new FormData();
     formData.append("image", typedImg);
