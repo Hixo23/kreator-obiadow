@@ -49,9 +49,18 @@ const remove = async (id: string) => {
   }
 }
 
+const update = async (id: string, updatedContent: string) => {
+  try {
+    await db.update(comments).set({ content: updatedContent }).where(eq(comments.id, id))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const commentRepository = {
   insert,
   findOne,
   findMany,
-  remove
+  remove,
+  update
 }
