@@ -1,4 +1,4 @@
-import { getMeal } from "@/features/dashboard/actions/getMeal";
+import { getMeal } from "@/features/meal-manager/actions/getMeal";
 import { Meal as MealComponent } from "@/features/meals/meal";
 import { type MealProps } from "@/features/meals/meal";
 
@@ -19,7 +19,7 @@ const MealPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     portions: meal.portions,
     ingredients: meal.ingredients.split(","),
     preparationProcess: meal.preparationProcess,
-    id: (await params).id
+    id: (await params).id,
   };
 
   return <MealComponent {...mealData} />;

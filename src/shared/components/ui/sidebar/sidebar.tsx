@@ -114,7 +114,9 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
                   <DropdownMenuLabel>{session.user.username}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <SuperLink href="/dashboard">Zarządzaj posiłkami</SuperLink>
+                    <SuperLink href="/meal-manager">
+                      Zarządzaj posiłkami
+                    </SuperLink>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
