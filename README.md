@@ -5,7 +5,7 @@ Kreator obiadów is a modern website that offers a rich collection of recipes fo
 ## Technologies
 
 - [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
+- [Clerk](https://clerk.dev)
 - [Prisma](https://prisma.io)
 - [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
@@ -30,7 +30,7 @@ cd kreator-obiadow
 pnpm install my-project
 ```
 
-- Push schema do database
+- Push schema to database
 
 ```bash
 pnpm run db:push
@@ -46,10 +46,8 @@ pnpm run dev
 
 To run this project, you will need to add the following environment variables to your .env file
 
-- `AUTH_SECRET`
-- `AUTH_DISCORD_ID`
-- `AUTH_DISCORD_SECRET`
-
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
 - `DATABASE_URL`
 - `UPLOADTHING_TOKEN`
 
