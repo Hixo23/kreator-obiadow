@@ -1,11 +1,11 @@
-import { Dashboard } from "@/features/dashboard/dashboard";
+import { MealManager } from "@/features/meal-manager/meal-manager";
 import { mealRepository } from "@/server/repositiries/meals";
 import { currentUser } from "@clerk/nextjs/server";
 
-const DashboardPage = async () => {
+const MealManagerPage = async () => {
   const user = await currentUser();
   const meals = await mealRepository.findByUser(user!.id);
-  return <Dashboard meals={meals} />;
+  return <MealManager meals={meals} />;
 };
 
-export default DashboardPage;
+export default MealManagerPage;

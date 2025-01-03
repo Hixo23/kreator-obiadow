@@ -17,7 +17,7 @@ import type { Meal } from "@/shared/types/types";
 import { UtensilsCrossed } from "lucide-react";
 import { MealControl } from "./components/meals-controls/meals-controls";
 
-export const Dashboard = ({ meals }: { meals: Meal[] }) => {
+export const MealManager = ({ meals }: { meals: Meal[] }) => {
   const totalMeals = meals.length;
   return (
     <div className="container mx-auto p-4">

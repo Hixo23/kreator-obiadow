@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { addRecipe } from "@/features/meals/actions/addRecipe";
 import { useDropzone } from "@uploadthing/react";
-import { updateMeal } from "@/features/dashboard/actions/updateMeal";
+import { updateMeal } from "@/features/meal-manager/actions/updateMeal";
 import { useUser } from "@clerk/nextjs";
 
 export const useRecipeForm = ({
