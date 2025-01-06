@@ -1,7 +1,7 @@
 "use client";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/shadcn/dropdown-menu"
-import { deleteComment } from "../../actions/deleteComment"
+import { deleteComment } from "../../actions/delete-comment"
 import { Dispatch, SetStateAction, useState } from "react";
 import { MappedComment } from "../comments-list/comments-list";
 

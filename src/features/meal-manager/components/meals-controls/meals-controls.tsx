@@ -4,7 +4,7 @@ import { Button } from "@/shared/components/ui/shadcn/button";
 import { TableCell } from "@/shared/components/ui/shadcn/table";
 import type { Meal } from "@/shared/types/types";
 import { Pencil, Trash2 } from "lucide-react";
-import { deleteMeal } from "../../actions/deleteMeal";
+import { deleteMeal } from "../../actions/delete-meal";
 import { useState } from "react";
 import { EditMeal } from "../edit-meal/edit-meal";
 

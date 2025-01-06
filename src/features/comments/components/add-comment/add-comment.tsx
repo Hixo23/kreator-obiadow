@@ -3,7 +3,7 @@
 import { Button } from "@/shared/components/ui/shadcn/button";
 import { Input } from "@/shared/components/ui/shadcn/input";
 import { useState } from "react";
-import { addComment } from "../../actions/addComment";
+import { addComment } from "../../actions/add-comment";
 
 
 export const AddComment = ({ postId }: { postId: string }) => {
