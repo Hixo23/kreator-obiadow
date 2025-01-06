@@ -1,6 +1,6 @@
 import { getMeal } from "@/features/meal-manager/actions/getMeal";
-import { Meal as MealComponent } from "@/features/meals/meal";
-import { type MealProps } from "@/features/meals/meal";
+import { Meal as MealComponent } from "@/features/shared/meal";
+import { type MealProps } from "@/features/shared/meal";
 
 const MealPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const result = await getMeal({ id: (await params).id });

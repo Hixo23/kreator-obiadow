@@ -1,8 +1,7 @@
 
-import { CommentsList, type MappedComment } from './comments-list/comments-list'
-import { AddComment } from './add-comment/add-comment'
-import { getComments } from '../actions/getComments'
-
+import { CommentsList, type MappedComment } from '@/features/comments/components/comments-list/comments-list'
+import { AddComment } from '@/features/comments/components/add-comment/add-comment'
+import { getComments } from "@/features/comments/actions/getComments"
 type CommentsData = {
   data: MappedComment[]
 }
