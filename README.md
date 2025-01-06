@@ -6,7 +6,6 @@ Kreator obiadów is a modern website that offers a rich collection of recipes fo
 
 - [Next.js](https://nextjs.org)
 - [Clerk](https://clerk.dev)
-- [Prisma](https://prisma.io)
 - [Drizzle](https://orm.drizzle.team)
 - [Tailwind CSS](https://tailwindcss.com)
 
