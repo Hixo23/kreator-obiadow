@@ -1,7 +1,7 @@
 "use server";
 
 import { mealRepository } from "@/server/repositiries/meals";
-import { actionClient } from "@/shared/lib/safe-action,";
+import { actionClient } from "@/shared/lib/safe-action";
 import { inputFormDataSchema } from "@/shared/utils/schemas";
 import { revalidatePath } from "next/cache";
 

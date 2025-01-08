@@ -1,7 +1,7 @@
 "use server";
 
 import { commentRepository } from "@/server/repositiries/comments";
-import { actionClient } from "@/shared/lib/safe-action,";
+import { actionClient } from "@/shared/lib/safe-action";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 

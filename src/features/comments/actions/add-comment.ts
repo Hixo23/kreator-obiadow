@@ -1,7 +1,7 @@
 "use server"
 
 import { commentRepository } from "@/server/repositiries/comments";
-import { actionClient } from "@/shared/lib/safe-action,";
+import { actionClient } from "@/shared/lib/safe-action";
 import { addCommentSchema } from "@/shared/utils/schemas";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
