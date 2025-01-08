@@ -21,7 +21,7 @@ export const AddComment = ({ postId }: { postId: string }) => {
       onChange={(e) => setNewComment(e.target.value)}
       className="flex-grow"
     />
-    <Button type="button">Dodaj</Button>
+    <Button type="submit">Dodaj</Button>
   </form>
 }
 
