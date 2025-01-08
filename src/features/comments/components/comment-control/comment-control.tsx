@@ -2,8 +2,8 @@
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/shared/components/ui/shadcn/dropdown-menu"
 import { deleteComment } from "../../actions/delete-comment"
-import { Dispatch, SetStateAction, useState } from "react";
-import { MappedComment } from "../comments-list/comments-list";
+import { type Dispatch, type SetStateAction } from "react";
+import { type MappedComment } from "../comments-list/comments-list";
 
 export const CommentControls = ({ children, comment, setIsEditing }: { children: React.ReactNode, comment: MappedComment, setIsEditing: Dispatch<SetStateAction<boolean>> }) => {
   return <>

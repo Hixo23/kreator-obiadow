@@ -1,4 +1,4 @@
-import { getMeal } from "@/features/meal-manager/actions/getMeal";
+import { getMeal } from "@/features/meal-manager/actions/get-meal";
 import { Meal as MealComponent } from "@/features/shared/meal";
 import { type MealProps } from "@/features/shared/meal";
 

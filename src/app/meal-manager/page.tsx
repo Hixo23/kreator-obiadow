@@ -1,4 +1,4 @@
-import { MealManager } from "@/features/meal-manager/meal-manager";
+import { MealManager } from "@/features/shared/meal-manager";
 import { mealRepository } from "@/server/repositiries/meals";
 import { currentUser } from "@clerk/nextjs/server";
 
