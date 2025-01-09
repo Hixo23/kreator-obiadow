@@ -5,10 +5,6 @@ import {
   LogIn,
   PlusCircle,
   Settings,
-  Coffee,
-  Sun,
-  Moon,
-  Salad,
 } from "lucide-react";
 
 import { Input } from "@/shared/components/ui/shadcn/input";
@@ -46,33 +42,9 @@ import { useState } from "react";
 import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
 import { SuperLink } from "@/shared/components/ui/super-link/super-link";
+import { mealTypes } from "@/shared/consts/mealTypes";
 
-export const mealTypes = [
-  {
-    name: "Sniadanie",
-    icon: Coffee,
-    subcategories: ["Szybkie sniadanie", "Zdrowy start"],
-  },
-  {
-    name: "Obiad",
-    icon: Sun,
-    subcategories: ["Kanapki", "Salatki", "Zupy"],
-  },
-  {
-    name: "Kolacja",
-    icon: Moon,
-    subcategories: ["Rodzinne posilki", "Nocna randka", "Szybka kolacja"],
-  },
-  {
-    name: "Przekaski",
-    icon: Salad,
-    subcategories: [
-      "Zdrowe przekaski",
-      "Imprezowe przekaski",
-      "Przekaski dla dzieci",
-    ],
-  },
-];
+
 
 export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState("");
