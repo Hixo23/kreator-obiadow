@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { Clock, Users } from "lucide-react";
-
 import { Badge } from "@/shared/components/ui/shadcn/badge";
-import { CommentsSection } from "../comments/components/comments";
+import { CommentsSection } from "./comments";
 
 export interface MealProps {
-  id: string
+  id: string;
   name: string;
   description: string;
   image: string;

@@ -10,7 +10,7 @@ export const inputSchema = z.object({
       .string()
       .min(10, { message: "Opis przepisu musi mieć co najmniej 10 znaków" }),
     ingredients: z
-      .array(z.string())
+      .array(z.string().min(5, { message: "Skladnik nie moze byc pusty!" }))
       .min(1, { message: "Przepis musi zawierać co najmniej jeden składnik" }),
     preparationTime: z.coerce
       .number()
@@ -58,5 +58,5 @@ export const inputEditRecipeFormData = zfd.formData({
 
 export const addCommentSchema = z.object({
   content: z.string(),
-  postId: z.string()
-})
+  postId: z.string(),
+});

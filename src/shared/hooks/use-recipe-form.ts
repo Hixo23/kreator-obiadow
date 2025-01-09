@@ -6,9 +6,9 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { inputSchema } from "../utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
-import { addRecipe } from "@/features/meals/actions/addRecipe";
+import { addRecipe } from "@/features/meals/actions/add-recipe";
 import { useDropzone } from "@uploadthing/react";
-import { updateMeal } from "@/features/meal-manager/actions/updateMeal";
+import { updateMeal } from "@/features/meal-manager/actions/update-meal";
 import { useUser } from "@clerk/nextjs";
 
 export const useRecipeForm = ({

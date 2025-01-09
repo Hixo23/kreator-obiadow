@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/shadcn/select";
-import { mealTypes } from "@/shared/components/ui/sidebar/sidebar";
+import { mealTypes } from "@/shared/consts/mealTypes";
 import { useRecipeForm } from "@/shared/hooks/use-recipe-form";
 
 export const AddNewMealForm = ({

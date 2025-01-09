@@ -15,7 +15,7 @@ import {
 } from "@/shared/components/ui/shadcn/table";
 import type { Meal } from "@/shared/types/types";
 import { UtensilsCrossed } from "lucide-react";
-import { MealControl } from "./components/meals-controls/meals-controls";
+import { MealControl } from "@/features/meal-manager/components/meals-controls/meals-controls";
 
 export const MealManager = ({ meals }: { meals: Meal[] }) => {
   const totalMeals = meals.length;

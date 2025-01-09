@@ -35,7 +35,9 @@ export const SettingsDialog = ({
           <Label>Tryb ciemny</Label>
           <Switch
             checked={resolvedTheme == "dark" ? true : false}
-            onCheckedChange={() => setTheme(resolvedTheme == "dark" ? "light" : "dark")}
+            onCheckedChange={() =>
+              setTheme(resolvedTheme == "dark" ? "light" : "dark")
+            }
           />
         </div>
       </DialogContent>

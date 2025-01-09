@@ -74,9 +74,12 @@ const findMany = async () => {
 };
 
 const findByUser = async (userId: string) => {
-  const userRecipes = await db.select().from(recipes).where(eq(recipes.userId, userId))
-  return userRecipes
-}
+  const userRecipes = await db
+    .select()
+    .from(recipes)
+    .where(eq(recipes.userId, userId));
+  return userRecipes;
+};
 
 const findByCategory = async (category: string) => {
   return await db.query.recipes.findMany({
@@ -95,5 +98,5 @@ export const mealRepository = {
   findMany,
   findByCategory,
   remove,
-  findByUser
+  findByUser,
 };
