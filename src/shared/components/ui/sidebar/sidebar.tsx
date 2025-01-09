@@ -45,7 +45,7 @@ import { SignOutButton, useSession } from "@clerk/nextjs";
 import { useState } from "react";
 import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dialog";
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
-import { SuperLink } from "../../super-link/super-link";
+import { SuperLink } from "@/shared/components/ui/super-link/super-link";
 
 export const mealTypes = [
   {

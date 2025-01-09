@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Input } from "@/shared/components/ui/shadcn/input";
 import { type Meal } from "@/shared/types/types";
 import { Search, X } from "lucide-react";
-import { SuperLink } from "@/shared/components/super-link/super-link";
+import { SuperLink } from "@/shared/components/ui/super-link/super-link";
 
 export const MealFilter = ({ meals }: { meals: Meal[] }) => {
   const [searchTerm, setSearchTerm] = useState("");

@@ -1,4 +1,4 @@
-import { SuperLink } from "@/shared/components/super-link/super-link";
+import { SuperLink } from "@/shared/components/ui/super-link/super-link";
 import {
   Card,
   CardContent,
