@@ -4,7 +4,7 @@ import { Badge } from "@/shared/components/ui/shadcn/badge";
 import { CommentsSection } from "./comments";
 
 export interface MealProps {
-  id: string
+  id: string;
   name: string;
   description: string;
   image: string;

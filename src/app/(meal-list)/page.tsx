@@ -3,10 +3,13 @@ import { MealList } from "@/features/meals/components/meal-list/meal-list";
 import { mealRepository } from "@/server/repositiries/meals";
 import { unstable_cache } from "next/cache";
 
-const getCachedMeals = unstable_cache(async () => await mealRepository.findMany(), ["meals"])
+const getCachedMeals = unstable_cache(
+  async () => await mealRepository.findMany(),
+  ["meals"],
+);
 
 export default async function Home() {
-  const meals = await getCachedMeals()
+  const meals = await getCachedMeals();
   return (
     <div className="h-screen w-screen font-poppins">
       <main className="flex h-full w-full dark:text-white">

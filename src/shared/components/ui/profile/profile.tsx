@@ -10,5 +10,5 @@ export const Profile = ({ user }: { user: User }) => {
       </Avatar>
       <p>{user.username}</p>
     </div>
-  )
-}; 
+  );
+};

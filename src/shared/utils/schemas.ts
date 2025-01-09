@@ -58,5 +58,5 @@ export const inputEditRecipeFormData = zfd.formData({
 
 export const addCommentSchema = z.object({
   content: z.string(),
-  postId: z.string()
-})
+  postId: z.string(),
+});
