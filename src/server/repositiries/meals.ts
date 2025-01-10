@@ -1,4 +1,4 @@
-import { inputFormDataSchema } from "@/shared/utils/schemas";
+import { addMealFormData } from "@/shared/utils/schemas";
 import { db } from "../db";
 import { recipes } from "../db/schema";
 import { ZodError } from "zod";
@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 
 const insert = async (formData: FormData): Promise<void> => {
   try {
-    const parsed = inputFormDataSchema.safeParse(formData);
+    const parsed = addMealFormData.safeParse(formData);
     if (parsed.success) {
       const imageData = await utapi.uploadFiles(parsed.data.image as File);
       const meal = {
@@ -35,7 +35,7 @@ const insert = async (formData: FormData): Promise<void> => {
 
 const update = async (formData: FormData): Promise<void> => {
   try {
-    const parsed = inputFormDataSchema.safeParse(formData);
+    const parsed = addMealFormData.safeParse(formData);
     if (parsed.success) {
       const imageData =
         typeof parsed.data.image === "string"

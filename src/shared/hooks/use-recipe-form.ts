@@ -3,7 +3,7 @@
 import { useCallback, type Dispatch, type SetStateAction } from "react";
 import type { Meal } from "../types/types";
 import { useFieldArray, useForm } from "react-hook-form";
-import { inputSchema } from "../utils/schemas";
+import { addMealSchema } from "../utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { addRecipe } from "@/features/meals/actions/add-recipe";
@@ -21,8 +21,8 @@ export const useRecipeForm = ({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const { user } = useUser();
-  const form = useForm<z.infer<typeof inputSchema>>({
-    resolver: zodResolver(inputSchema),
+  const form = useForm<z.infer<typeof addMealSchema>>({
+    resolver: zodResolver(addMealSchema),
     defaultValues: {
       recipe: {
         name: meal?.name ?? " ",
@@ -44,7 +44,7 @@ export const useRecipeForm = ({
     name: "recipe.ingredients",
   });
 
-  async function onSubmit(values: z.infer<typeof inputSchema>) {
+  async function onSubmit(values: z.infer<typeof addMealSchema>) {
     const typedImg = values.image as File;
     if (!typedImg) return;
     const formData = new FormData();
