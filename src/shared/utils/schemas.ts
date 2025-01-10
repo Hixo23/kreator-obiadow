@@ -22,6 +22,8 @@ export const addMealSchema = z.object({
       message: "Proces przygotowania musi miec co najmniej 10 znakow",
     }),
     category: z.string().min(1, { message: "Kategoria nie może być pusta" }),
+    dietType: z.string().min(1, { message: "Typ diety nie może być pusty" }),
+    difficulty: z.string().min(1, { message: "Trudność nie może być pusta" }),
     subcategory: z
       .string()
       .min(1, { message: "Podkategoria nie może być pusta" }),
@@ -41,6 +43,8 @@ export const addMealFormData = zfd.formData({
   category: zfd.text(),
   subcategory: zfd.text(),
   userId: zfd.text(),
+  difficulty: zfd.text(),
+  dietType: zfd.text()
 });
 
 export const addCommentSchema = z.object({

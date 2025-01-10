@@ -21,6 +21,8 @@ const insert = async (formData: FormData): Promise<void> => {
         category: parsed.data.category,
         subcategory: parsed.data.subcategory.toLowerCase().split(" ").join("-"),
         userId: parsed.data.userId,
+        dietType: parsed.data.dietType,
+        difficulty: parsed.data.difficulty,
       };
       await db.insert(recipes).values(meal);
     } else {
@@ -53,6 +55,8 @@ const update = async (formData: FormData): Promise<void> => {
         subcategory: parsed.data.subcategory.toLowerCase().split(" ").join("-"),
         userId: parsed.data.userId,
         id: parsed.data.id,
+        dietType: parsed.data.dietType,
+        difficulty: parsed.data.difficulty,
       };
       await db.update(recipes).set(meal).where(eq(recipes.id, meal.id!));
     } else {
