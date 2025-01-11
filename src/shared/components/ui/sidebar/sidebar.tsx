@@ -43,6 +43,7 @@ import { SettingsDialog } from "@/shared/components/settings-dialog/settings-dia
 import { AddNewMeal } from "@/features/meals/components/add-new-meal/add-new-meal";
 import { SuperLink } from "@/shared/components/ui/super-link/super-link";
 import { mealTypes } from "@/shared/consts/mealTypes";
+import Link from "next/link";
 
 
 
@@ -158,17 +159,14 @@ export const MealSidebar = ({ children }: { children: React.ReactNode }) => {
             <SidebarMenu>
               {session?.user.id && (
                 <SidebarMenuItem>
-                  <AddNewMeal
-                    isOpen={isAddNewRecipeOpen}
-                    setIsOpen={setIsAddNewRecipeOpen}
+
+                  <SidebarMenuButton
+                    asChild
+                    onClick={() => setIsAddNewRecipeOpen(true)}
                   >
-                    <SidebarMenuButton
-                      onClick={() => setIsAddNewRecipeOpen(true)}
-                    >
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      Dodaj przepis
-                    </SidebarMenuButton>
-                  </AddNewMeal>
+                    <Link href={'/meal/add'}><PlusCircle className="mr-2 h-4 w-4" />
+                      Dodaj przepis</Link>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               )}
               <SidebarMenuItem>

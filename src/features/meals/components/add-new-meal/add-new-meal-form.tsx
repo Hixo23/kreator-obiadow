@@ -11,7 +11,7 @@ import {
 } from "@/shared/components/ui/shadcn/form";
 import { Input } from "@/shared/components/ui/shadcn/input";
 import { Delete, Trash } from "lucide-react";
-import { type Dispatch, type SetStateAction, useEffect } from "react";
+import { useEffect } from "react";
 import { cn } from "@/shared/lib/utils";
 import { Textarea } from "@/shared/components/ui/shadcn/textarea";
 import Image from "next/image";
@@ -25,11 +25,7 @@ import {
 import { mealTypes } from "@/shared/consts/mealTypes";
 import { useRecipeForm } from "@/shared/hooks/use-recipe-form";
 
-export const AddNewMealForm = ({
-  setIsOpen,
-}: {
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+export const AddNewMealForm = () => {
   const {
     form,
     append,
@@ -38,14 +34,14 @@ export const AddNewMealForm = ({
     getRootProps,
     onSubmit,
     remove,
-  } = useRecipeForm({ action: "create", setIsOpen });
+  } = useRecipeForm({ action: "create" });
 
   useEffect(() => {
-    return form.setValue("recipe.subcategory", "");
+    return form.setValue("recipe.subcategory", " ");
   }, [form.watch("recipe.category")]);
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-8 items-center">
         <FormField
           control={form.control}
           name="recipe.name"
@@ -200,6 +196,57 @@ export const AddNewMealForm = ({
             )}
           />
         )}
+
+        <FormField
+          control={form.control}
+          name="recipe.difficulty"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Poziom zaawansowania</FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Wybierz poziom zaawansowania" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {["Łatwy", "Średni", "Zaawansowany"].map((level) => (
+                    <SelectItem key={level} value={level}>
+                      {level}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="recipe.dietType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Typ diety</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Wybierz typ diety" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {["Wegetariańska", "Wegańska", "Bezglutenowa", "Keto", "Inne"].map(
+                    (diet) => (
+                      <SelectItem key={diet} value={diet}>
+                        {diet}
+                      </SelectItem>
+                    )
+                  )}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {form.getValues("image") ? (
           <div className="relative flex h-52 w-96">
             <Button

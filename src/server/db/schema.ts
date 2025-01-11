@@ -26,6 +26,8 @@ export const recipes = createTable("recipe", {
   category: text("category"),
   subcategory: text("subcategory"),
   userId: varchar("user_id", { length: 255 }).notNull(),
+  difficulty: text("difficulty").notNull(),
+  dietType: text("diet_type").notNull(),
 });
 
 export const comments = createTable("comment", {

@@ -10,4 +10,6 @@ export type Meal = {
   preparationProcess: string;
   category: string | null;
   subcategory: string | null;
+  dietType: string | null;
+  difficulty: string | null;
 };

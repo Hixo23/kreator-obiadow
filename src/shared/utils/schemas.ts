@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
-export const inputSchema = z.object({
+export const addMealSchema = z.object({
   recipe: z.object({
     name: z
       .string()
@@ -22,6 +22,8 @@ export const inputSchema = z.object({
       message: "Proces przygotowania musi miec co najmniej 10 znakow",
     }),
     category: z.string().min(1, { message: "Kategoria nie może być pusta" }),
+    dietType: z.string().min(1, { message: "Typ diety nie może być pusty" }),
+    difficulty: z.string().min(1, { message: "Trudność nie może być pusta" }),
     subcategory: z
       .string()
       .min(1, { message: "Podkategoria nie może być pusta" }),
@@ -29,7 +31,7 @@ export const inputSchema = z.object({
   }),
   image: z.any().optional(),
 });
-export const inputFormDataSchema = zfd.formData({
+export const addMealFormData = zfd.formData({
   id: zfd.text().optional(),
   name: zfd.text(),
   description: zfd.text(),
@@ -41,19 +43,8 @@ export const inputFormDataSchema = zfd.formData({
   category: zfd.text(),
   subcategory: zfd.text(),
   userId: zfd.text(),
-});
-
-export const inputEditRecipeFormData = zfd.formData({
-  id: zfd.text(),
-  name: zfd.text(),
-  description: zfd.text(),
-  ingredients: zfd.text(),
-  preparationTime: zfd.text(),
-  portions: zfd.text(),
-  image: zfd.file().or(zfd.text()),
-  preparationProcess: zfd.text(),
-  category: zfd.text(),
-  subcategory: zfd.text(),
+  difficulty: zfd.text(),
+  dietType: zfd.text()
 });
 
 export const addCommentSchema = z.object({
