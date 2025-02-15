@@ -2,7 +2,6 @@
 
 import { Button } from "@/shared/components/ui/shadcn/button";
 import { Input } from "@/shared/components/ui/shadcn/input";
-import { useState } from "react";
 import { addComment } from "../../actions/add-comment";
 import { useUser } from "@clerk/nextjs";
 import { useForm } from "react-hook-form";
