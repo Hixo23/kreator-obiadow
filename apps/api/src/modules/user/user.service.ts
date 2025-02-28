@@ -6,8 +6,7 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
-import bcrypt from 'bcrypt';
-
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
@@ -30,15 +29,16 @@ export class UserService {
       throw new ConflictException();
     }
 
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 40);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 1);
 
-    return await this.prismaService.user.create({
+    await this.prismaService.user.create({
       data: {
         username: createUserDto.username,
         email: createUserDto.email,
         password: hashedPassword,
       },
     });
+    return { message: 'user created' };
   }
 
   async findAll() {
