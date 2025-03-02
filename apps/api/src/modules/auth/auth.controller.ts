@@ -1,9 +1,19 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
-import { LoginDto } from './dto/login.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserService } from '../user/user.service';
+import { AuthGuard } from '@nestjs/passport';
+import { Request, Response } from 'express';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { Response } from 'express';
+import { UserService } from '../user/user.service';
+import { Recipe, Role } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
@@ -11,13 +21,40 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly userService: UserService,
   ) {}
-  @Post('/login')
-  async login(@Body() body: LoginDto, @Res() response: Response) {
-    return await this.authService.login(body, response);
+
+  @Post()
+  async register(@Body() body: CreateUserDto) {
+    return await this.userService.create(body);
   }
 
-  @Post('/register')
-  async Register(@Body() body: CreateUserDto) {
-    return this.userService.create(body);
+  @UseGuards(AuthGuard('local'))
+  @Post('/login')
+  async login(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as {
+      id: string;
+      username: string;
+      password: string;
+      email: string;
+      role: Role;
+      recipes: Recipe[];
+    };
+    const userLogin = await this.authService.login(user);
+    res.cookie('token', userLogin.access_token, {
+      httpOnly: true,
+      sameSite: 'none',
+    });
+    return res.json({ message: 'user logged in' });
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/me')
+  async getUser(@Req() req: Request) {
+    return req.user;
+  }
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/logout')
+  async logout(@Res() res: Response) {
+    res.cookie('token', '');
+    return res.json({ message: 'user logged out' });
   }
 }

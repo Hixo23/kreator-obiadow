@@ -19,11 +19,7 @@ export class UserService {
       throw new BadRequestException();
     }
 
-    const userIsExist = await this.prismaService.user.findFirst({
-      where: {
-        email: createUserDto.email,
-      },
-    });
+    const userIsExist = await this.findOne(createUserDto.email);
 
     if (userIsExist) {
       throw new ConflictException();
@@ -45,11 +41,11 @@ export class UserService {
     return await this.prismaService.user.findMany();
   }
 
-  async findOne(id: string) {
-    if (!id) throw new BadRequestException();
+  async findOne(email: string) {
+    if (!email) throw new BadRequestException();
     return await this.prismaService.user.findFirst({
       where: {
-        id,
+        email,
       },
     });
   }
