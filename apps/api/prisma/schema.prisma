@@ -34,8 +34,6 @@ model Recipe {
   author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId           String
   comments           Comment[]
-
-  @@index([authorId])
 }
 
 model Comment {
@@ -45,5 +43,4 @@ model Comment {
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId String
 
-  @@index([recipeId, authorId])
 }
