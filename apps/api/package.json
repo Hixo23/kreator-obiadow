@@ -33,14 +33,16 @@
     "@prisma/client": "^6.4.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
+    "@types/streamifier": "^0.1.2",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "uploadthing": "^7.5.2"
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",

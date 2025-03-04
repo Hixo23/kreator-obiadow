@@ -3,17 +3,17 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { UTApi } from 'uploadthing/server';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { PrismaService } from 'src/prisma.service';
-import { uploadRouter } from 'src/utils/uploadThing';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class RecipesService {
-  private utApi = new UTApi();
-
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
   async create({
     authorId,
     description,
@@ -35,10 +35,8 @@ export class RecipesService {
     )
       throw new BadRequestException();
 
-    const imageUpload = await this.utApi.uploadFiles(file as unknown as File);
-
-    console.log(imageUpload.error);
-
+    const imageUpload = await this.cloudinaryService.uploadFile(file);
+    console.log(imageUpload.url);
     if (imageUpload.error) throw new InternalServerErrorException();
 
     const recipe = await this.prismaService.recipe.create({
@@ -46,7 +44,7 @@ export class RecipesService {
         description,
         dietType,
         difficulty,
-        imageUrl: imageUpload.data.ufsUrl,
+        imageUrl: imageUpload.url,
         ingredients,
         name,
         preparationProcess,
