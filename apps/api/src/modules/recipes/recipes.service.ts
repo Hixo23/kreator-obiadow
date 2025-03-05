@@ -13,7 +13,7 @@ export class RecipesService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  ) { }
   async create({
     authorId,
     description,
@@ -73,8 +73,36 @@ export class RecipesService {
     });
   }
 
-  update(id: string, updateRecipeDto: UpdateRecipeDto) {
-    return `This action updates a #${id} recipe`;
+  async update(id: string, { authorId, description, dietType, difficulty, ingredients, name, preparationProcess }: UpdateRecipeDto, file: Express.Multer.File) {
+    if (file) {
+      const imageUpload = await this.cloudinaryService.uploadFile(file);
+      if (imageUpload.error) throw new InternalServerErrorException();
+      return await this.prismaService.recipe.update({
+        where: {
+          id,
+          authorId
+        },
+        data: {
+          imageUrl: imageUpload.url
+        }
+      })
+    }
+
+    const updatedRecipe = await this.prismaService.recipe.update({
+      where: {
+        id: id,
+        authorId: authorId
+      },
+      data: {
+        description,
+        dietType,
+        difficulty,
+        ingredients,
+        name,
+        preparationProcess
+      }
+    })
+    return updatedRecipe
   }
 
   async remove(id: string) {

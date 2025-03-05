@@ -6,26 +6,29 @@ import {
   Patch,
   Param,
   Delete,
-  Logger,
   UploadedFile,
   UseInterceptors,
+  UseGuards,
+  ParseFilePipeBuilder,
+  HttpStatus,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('recipe')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipesService) {}
+  constructor(private readonly recipesService: RecipesService) { }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FileInterceptor('file'))
   create(
     @Body() createRecipeDto: CreateRecipeDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    Logger.debug(createRecipeDto, file);
     return this.recipesService.create({ ...createRecipeDto, file });
   }
 
@@ -40,11 +43,19 @@ export class RecipesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto) {
-    return this.recipesService.update(id, updateRecipeDto);
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FileInterceptor("file", {}))
+  update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto, @UploadedFile(
+    new ParseFilePipeBuilder()
+      .build({
+        fileIsRequired: false,
+        errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+      })) file: Express.Multer.File) {
+    return this.recipesService.update(id, updateRecipeDto, file);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string) {
     return this.recipesService.remove(id);
   }
