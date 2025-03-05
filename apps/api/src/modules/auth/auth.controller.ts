@@ -22,7 +22,7 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Post()
+  @Post('/register')
   async register(@Body() body: CreateUserDto) {
     return await this.userService.create(body);
   }
