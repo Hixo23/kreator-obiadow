@@ -1,9 +1,24 @@
-import { Search, ChevronDown, UtensilsCrossed, LogIn, PlusCircle, Settings, Coffee, Sun, Moon, Salad } from 'lucide-react'
+import {
+  Search,
+  ChevronDown,
+  UtensilsCrossed,
+  LogIn,
+  PlusCircle,
+  Settings,
+  Coffee,
+  Sun,
+  Moon,
+  Salad,
+} from "lucide-react";
 
-import { Input } from "@/shared/components/ui/shadcn/input"
-import { Label } from "@/shared/components/ui/shadcn/label"
-import { Button } from "@/shared/components/ui/shadcn/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/shadcn/avatar"
+import { Input } from "@/shared/components/ui/shadcn/input";
+import { Label } from "@/shared/components/ui/shadcn/label";
+import { Button } from "@/shared/components/ui/shadcn/button";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/ui/shadcn/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +26,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/shared/components/ui/shadcn/dropdown-menu"
+} from "@/shared/components/ui/shadcn/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -23,94 +38,83 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/shared/components/ui/shadcn/sidebar'
-import { useEffect, useState } from 'react'
+} from "@/shared/components/ui/shadcn/sidebar";
+import { useEffect, useState } from "react";
+import { useUser } from "@/shared/contexts/userContext";
 
 const mealTypes = [
   {
-    name: 'Breakfast',
+    name: "Breakfast",
     icon: Coffee,
-    subcategories: ['Quick Breakfasts', 'Brunch', 'Healthy Starts']
+    subcategories: ["Quick Breakfasts", "Brunch", "Healthy Starts"],
   },
   {
-    name: 'Lunch',
+    name: "Lunch",
     icon: Sun,
-    subcategories: ['Sandwiches', 'Salads', 'Soups']
+    subcategories: ["Sandwiches", "Salads", "Soups"],
   },
   {
-    name: 'Dinner',
+    name: "Dinner",
     icon: Moon,
-    subcategories: ['Family Meals', 'Date Night', 'Quick Dinners']
+    subcategories: ["Family Meals", "Date Night", "Quick Dinners"],
   },
   {
-    name: 'Snacks',
+    name: "Snacks",
     icon: Salad,
-    subcategories: ['Healthy Snacks', 'Party Appetizers', 'Kids Snacks']
-  }
-]
-
-const mockSession = {
-  user: {
-    name: 'Jane Doe',
-    email: 'jane@example.com',
-    image: 'https://i.pravatar.cc/150?img=5'
-  }
-}
+    subcategories: ["Healthy Snacks", "Party Appetizers", "Kids Snacks"],
+  },
+];
 
 export default function AppSidebar() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [session, setSession] = useState<{ user: { name: string, email: string, image: string } } | null>(null)
-
-  useEffect(() => {
-    setTimeout(() => setSession(mockSession), 1000)
-  }, [])
-
-  const filteredMealTypes = mealTypes.filter(mealType =>
-    mealType.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    mealType.subcategories.some(subcategory =>
-      subcategory.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  )
+  const [searchTerm, setSearchTerm] = useState("");
+  const user = useUser();
+  const filteredMealTypes = mealTypes.filter(
+    (mealType) =>
+      mealType.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      mealType.subcategories.some((subcategory) =>
+        subcategory.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+  );
 
   const handleSignIn = () => {
-    console.log('Sign in clicked')
-  }
-
-  const handleSignOut = () => {
-    setSession(null)
-  }
+    console.log("Sign in clicked");
+  };
 
   const handleAddMeal = () => {
-    console.log('Add meal clicked')
-  }
+    console.log("Add meal clicked");
+  };
 
   const handleOpenSettings = () => {
-    console.log('Settings clicked')
-  }
+    console.log("Settings clicked");
+  };
 
   return (
     <Sidebar className="border-r">
       <SidebarHeader>
         <div className="flex items-center justify-between px-4 py-2">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-nowrap">Kreator obiadów</h2>
+            <h2 className="text-lg font-semibold text-nowrap">
+              Kreator obiadów
+            </h2>
           </div>
-          {session ? (
+          {user?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={session.user.image} alt={session.user.name} />
-                    <AvatarFallback>{session.user.name.charAt(0)}</AvatarFallback>
+                    <AvatarImage
+                      src={user.user.username}
+                      alt={user.user.username}
+                    />
+                    <AvatarFallback>
+                      {user.user.username.charAt(0)}
+                    </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>{session.user.name}</DropdownMenuLabel>
+                <DropdownMenuLabel>{user.user.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
@@ -149,7 +153,9 @@ export default function AppSidebar() {
                 {mealType.subcategories.map((subcategory) => (
                   <SidebarMenuItem key={subcategory}>
                     <SidebarMenuButton asChild>
-                      <a href={`#${subcategory.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <a
+                        href={`#${subcategory.toLowerCase().replace(/\s+/g, "-")}`}
+                      >
                         {subcategory}
                       </a>
                     </SidebarMenuButton>
@@ -177,13 +183,12 @@ export default function AppSidebar() {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
-        {session && (
+        {user?.user && (
           <div className="px-4 py-2 text-sm text-muted-foreground">
-            Signed in as {session.user.email}
+            Signed in as {user.user.email}
           </div>
         )}
       </SidebarFooter>
     </Sidebar>
-
-  )
+  );
 }

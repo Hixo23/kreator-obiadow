@@ -41,7 +41,6 @@ export class AuthController {
     const userLogin = await this.authService.login(user);
     res.cookie('token', userLogin.access_token, {
       httpOnly: true,
-      sameSite: 'none',
     });
     return res.json({ message: 'user logged in' });
   }
@@ -52,7 +51,7 @@ export class AuthController {
     return req.user;
   }
   @UseGuards(AuthGuard('jwt'))
-  @Post('/logout')
+  @Delete('/logout')
   async logout(@Res() res: Response) {
     res.cookie('token', '');
     return res.json({ message: 'user logged out' });
