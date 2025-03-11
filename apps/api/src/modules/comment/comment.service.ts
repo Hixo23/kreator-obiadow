@@ -15,7 +15,6 @@ export class CommentService {
     if (!authorId || !content || !rating || !recipeId)
       throw new BadRequestException();
     const comment = await this.prismaService.comment.create({
-      data: {
         content,
         rating,
         author: {
