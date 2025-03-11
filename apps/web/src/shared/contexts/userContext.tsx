@@ -19,7 +19,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
-    staleTime: 1000 * 60 * 5,
   });
   return (
     <UserContext.Provider value={{ user, isLoading, error }}>

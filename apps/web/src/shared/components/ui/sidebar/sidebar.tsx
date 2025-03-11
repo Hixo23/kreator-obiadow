@@ -39,8 +39,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@/shared/components/ui/shadcn/sidebar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUser } from "@/shared/contexts/userContext";
+import { useSignout } from "@/shared/hooks/use-signout";
+import { useNavigate } from "react-router";
 
 const mealTypes = [
   {
@@ -67,6 +69,8 @@ const mealTypes = [
 
 export default function AppSidebar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const { signout } = useSignout();
+  const navigate = useNavigate();
   const user = useUser();
   const filteredMealTypes = mealTypes.filter(
     (mealType) =>
@@ -77,7 +81,11 @@ export default function AppSidebar() {
   );
 
   const handleSignIn = () => {
-    console.log("Sign in clicked");
+    navigate("/auth/sign-in");
+  };
+
+  const handleSignOut = () => {
+    signout.mutate();
   };
 
   const handleAddMeal = () => {
@@ -115,6 +123,9 @@ export default function AppSidebar() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>{user.user.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleSignOut}>
+                  Wyloguj się
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

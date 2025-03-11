@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signIn } from "../../../shared/api/auth/signIn";
 import { signUp } from "../../../shared/api/auth/signUp";
+import { useNavigate } from "react-router";
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const login = useMutation({
     mutationFn: async ({
       email,
@@ -16,6 +18,7 @@ export const useAuth = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      return navigate("/");
     },
   });
 
@@ -32,7 +35,7 @@ export const useAuth = () => {
       return await signUp({ username, email, password });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      return navigate("/auth/sign-in");
     },
   });
 

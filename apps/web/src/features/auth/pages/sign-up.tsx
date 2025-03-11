@@ -23,6 +23,9 @@ import { useAuth } from "../hooks/use-auth";
 import { useEffect, useState } from "react";
 
 const formSchema = z.object({
+  username: z
+    .string()
+    .min(3, { message: "Nazwa użytkownika musi zawierać minimum 3 znaki" }),
   email: z
     .string()
     .min(3, { message: "Twój email musi zawierać minimum 3 znaki" })
@@ -40,26 +43,28 @@ const formSchema = z.object({
     ),
 });
 
-export const SignIn = () => {
+export const SignUp = () => {
   const [error, setError] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
     },
   });
 
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   useEffect(() => {
-    if (login.isError) {
-      setError(login.error.message);
+    if (register.isError) {
+      setError(register.error.message);
     }
-  }, [login.error?.message, login.isError]);
+  }, [register.error?.message, register.isError]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    return await login.mutateAsync({
+    return await register.mutateAsync({
+      username: values.username,
       email: values.email,
       password: values.password,
     });
@@ -70,7 +75,8 @@ export const SignIn = () => {
         <CardHeader>
           <CardTitle>Witaj</CardTitle>
           <CardDescription>
-            Musisz być zalogowany, aby móc skorzystać z kreatora obiadów!
+            Zarejestruj się, aby korzystać z naszej aplikacji i wynajdować swoje
+            ulubione przepisy!
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -79,6 +85,19 @@ export const SignIn = () => {
               onSubmit={form.handleSubmit(onSubmit)}
               className="flex flex-col gap-6 justify-between"
             >
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Marek123" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -112,12 +131,12 @@ export const SignIn = () => {
               />
               <p className="text-red-500">{error}</p>
               <p>
-                Nie posiadasz jeszcze konta?{" "}
-                <NavLink className="text-indigo-400" to={"/auth/sign-up"}>
-                  Zarejestruj się
+                Masz już konto?{" "}
+                <NavLink className="text-indigo-400" to={"/auth/sign-in"}>
+                  Zaloguj się
                 </NavLink>
               </p>
-              <Button type="submit">Zaloguj</Button>
+              <Button type="submit">Zarejestruj się</Button>
             </form>
           </Form>
         </CardContent>
