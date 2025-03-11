@@ -43,6 +43,7 @@ import { useState } from "react";
 import { useUser } from "@/shared/contexts/userContext";
 import { useSignout } from "@/shared/hooks/use-signout";
 import { useNavigate } from "react-router";
+import { SettingsModal } from "../../modals/settings-modal/settings-modal";
 
 const mealTypes = [
   {
@@ -186,12 +187,14 @@ export default function AppSidebar() {
                 Dodaj nowy posiłek
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton onClick={handleOpenSettings}>
-                <Settings className="mr-2 h-4 w-4" />
-                Ustawienia
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            <SettingsModal>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleOpenSettings}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Ustawienia
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SettingsModal>
           </SidebarMenu>
         </SidebarGroup>
         {user?.user && (
