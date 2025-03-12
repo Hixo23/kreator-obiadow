@@ -20,7 +20,6 @@ import {
 } from "@/shared/components/ui/shadcn/card";
 import { NavLink } from "react-router";
 import { useAuth } from "../hooks/use-auth";
-import { useEffect, useState } from "react";
 
 const formSchema = z.object({
   email: z
@@ -41,7 +40,6 @@ const formSchema = z.object({
 });
 
 export const SignIn = () => {
-  const [error, setError] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,12 +49,6 @@ export const SignIn = () => {
   });
 
   const { login } = useAuth();
-
-  useEffect(() => {
-    if (login.isError) {
-      setError(login.error.message);
-    }
-  }, [login.error?.message, login.isError]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     return await login.mutateAsync({
@@ -110,7 +102,7 @@ export const SignIn = () => {
                   </FormItem>
                 )}
               />
-              <p className="text-red-500">{error}</p>
+              {login.isError && <p className="text-red-500">{login.error.message}</p>}
               <p>
                 Nie posiadasz jeszcze konta?{" "}
                 <NavLink className="text-indigo-400" to={"/auth/sign-up"}>
