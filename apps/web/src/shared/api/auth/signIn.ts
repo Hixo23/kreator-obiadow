@@ -1,5 +1,5 @@
 import { httpClient } from "@/shared/lib/httpClient";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export type SignInError = {
   message: string;

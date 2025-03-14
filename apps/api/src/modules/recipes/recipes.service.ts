@@ -13,9 +13,9 @@ export class RecipesService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly cloudinaryService: CloudinaryService,
-  ) { }
+  ) {}
+
   async create({
-    authorId,
     description,
     dietType,
     difficulty,
@@ -23,15 +23,19 @@ export class RecipesService {
     name,
     preparationProcess,
     file,
+    authorId,
+    preparationTime,
+    servings,
   }: CreateRecipeDto & { file: Express.Multer.File }) {
     if (
-      !authorId ||
       !description ||
       !dietType ||
       !difficulty ||
       !ingredients ||
       !name ||
-      !preparationProcess
+      !preparationProcess ||
+      !preparationTime ||
+      !servings
     )
       throw new BadRequestException();
 
@@ -48,6 +52,8 @@ export class RecipesService {
         ingredients,
         name,
         preparationProcess,
+        preparationTime: +preparationTime,
+        servings: +servings,
         author: {
           connect: {
             id: authorId,
@@ -73,25 +79,37 @@ export class RecipesService {
     });
   }
 
-  async update(id: string, { authorId, description, dietType, difficulty, ingredients, name, preparationProcess }: UpdateRecipeDto, file: Express.Multer.File) {
+  async update(
+    id: string,
+    {
+      authorId,
+      description,
+      dietType,
+      difficulty,
+      ingredients,
+      name,
+      preparationProcess,
+    }: UpdateRecipeDto,
+    file: Express.Multer.File,
+  ) {
     if (file) {
       const imageUpload = await this.cloudinaryService.uploadFile(file);
       if (imageUpload.error) throw new InternalServerErrorException();
       return await this.prismaService.recipe.update({
         where: {
           id,
-          authorId
+          authorId,
         },
         data: {
-          imageUrl: imageUpload.url
-        }
-      })
+          imageUrl: imageUpload.url,
+        },
+      });
     }
 
     const updatedRecipe = await this.prismaService.recipe.update({
       where: {
         id: id,
-        authorId: authorId
+        authorId: authorId,
       },
       data: {
         description,
@@ -99,10 +117,10 @@ export class RecipesService {
         difficulty,
         ingredients,
         name,
-        preparationProcess
-      }
-    })
-    return updatedRecipe
+        preparationProcess,
+      },
+    });
+    return updatedRecipe;
   }
 
   async remove(id: string) {

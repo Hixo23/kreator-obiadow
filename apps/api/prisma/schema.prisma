@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role  {
+enum Role {
   USER
   ADMIN
 }
@@ -19,7 +19,7 @@ model User {
   email    String
   recipes  Recipe[]
   Comment  Comment[]
-  role    Role @default(USER)
+  role     Role      @default(USER)
 }
 
 model Recipe {
@@ -28,9 +28,11 @@ model Recipe {
   description        String
   imageUrl           String
   preparationProcess String
+  preparationTime    Int       @default(0)
   ingredients        String
   dietType           String
   difficulty         String
+  servings           Int       @default(0)
   author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId           String
   comments           Comment[]
@@ -39,10 +41,9 @@ model Recipe {
 model Comment {
   id       String @id @default(uuid())
   content  String
-  rating   Int 
+  rating   Int
   recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recipeId String
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId String
-
 }

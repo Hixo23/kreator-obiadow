@@ -6,7 +6,7 @@ export const AppLayout = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="dark w-full min-h-full">
+      <main className="dark w-full min-h-full ml-4">
         <SidebarTrigger />
         <Outlet />
       </main>
