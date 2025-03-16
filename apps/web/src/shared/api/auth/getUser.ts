@@ -5,7 +5,7 @@ export const getUser = async () => {
   try {
     const response = await httpClient.get("/auth/me");
 
-    return response.data;
+    return response?.data || null;
   } catch (error) {
     if (isAxiosError(error)) {
       switch (error.status) {

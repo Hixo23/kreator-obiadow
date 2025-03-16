@@ -8,6 +8,8 @@ export interface IRecipe {
   dietType: string;
   difficulty: string;
   authorId: string;
+  preparationTime: number;
+  servings: number;
 }
 
 export interface IUser {
