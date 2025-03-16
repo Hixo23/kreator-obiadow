@@ -3,6 +3,8 @@ import App from "./App";
 import { AppLayout } from "./shared/components/layouts/app-layout";
 import { SignIn } from "./features/auth/pages/sign-in";
 import { SignUp } from "./features/auth/pages/sign-up";
+import {AddRecipePage} from "@/features/recipes/pages/add-recipe.tsx";
+import {ProtectedRoute} from "@/shared/components/protected-route.tsx";
 
 export const Router = () => {
   return (
@@ -10,6 +12,9 @@ export const Router = () => {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<App />} />
+          <Route path="recipe">
+            <Route path="add" element={<ProtectedRoute><AddRecipePage/></ProtectedRoute>} />
+          </Route>
         </Route>
         <Route path="auth">
           <Route path="sign-in" element={<SignIn />} />

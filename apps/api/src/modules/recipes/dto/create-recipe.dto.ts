@@ -6,4 +6,6 @@ export class CreateRecipeDto {
   readonly dietType: string;
   readonly difficulty: string;
   readonly authorId: string;
+  readonly preparationTime: number;
+  readonly servings: number;
 }

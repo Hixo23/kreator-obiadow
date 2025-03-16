@@ -1,7 +1,5 @@
 import {
   Search,
-  ChevronDown,
-  UtensilsCrossed,
   LogIn,
   PlusCircle,
   Settings,
@@ -90,7 +88,7 @@ export default function AppSidebar() {
   };
 
   const handleAddMeal = () => {
-    console.log("Add meal clicked");
+    navigate("/recipe/add");
   };
 
   const handleOpenSettings = () => {
