@@ -1,5 +1,7 @@
+import { RecipeList } from "@/features/recipes/components/recipe-list/recipe-list.tsx";
+
 function App() {
-  return <></>;
+  return <RecipeList />;
 }
 
 export default App;

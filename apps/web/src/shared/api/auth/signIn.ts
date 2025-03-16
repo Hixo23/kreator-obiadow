@@ -19,7 +19,7 @@ export const signIn = async ({
       password,
     });
 
-    return response.data;
+    return response?.data || null;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const axiosError = error;

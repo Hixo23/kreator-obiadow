@@ -26,7 +26,7 @@ export const addRecipe = async (values: z.infer<typeof addRecipeSchema>) => {
       formData.append("file", values.image);
     }
     const response = await httpClient.post("/recipe", formData);
-    return response.data;
+    return response?.data || null;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 400) {
