@@ -1,16 +1,16 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRecipe } from "@/shared/api/recipes/get-recipe.ts";
 import { IRecipe } from "@/shared/types";
 import { AxiosResponse } from "axios";
 import { editRecipe } from "@/shared/api/recipes/edit-recipe.ts";
 
 export const useSingleRecipe = (id: string) => {
-  const singleRecipe = () =>
-    useQuery({
-      queryKey: ["recipe"],
-      queryFn: async (): Promise<AxiosResponse<IRecipe> | null> =>
-        await getRecipe(id),
-    });
+  const queryClient = useQueryClient();
+  const singleRecipe = useQuery({
+    queryKey: [`recipe-${id}`],
+    queryFn: async (): Promise<AxiosResponse<IRecipe> | null> =>
+      await getRecipe(id),
+  });
 
   const edit = useMutation({
     mutationKey: ["editRecipe"],
@@ -25,10 +25,10 @@ export const useSingleRecipe = (id: string) => {
       preparationTime,
       servings,
       image,
-    }: IRecipe & { image?: File }): Promise<
+    }: IRecipe & { image?: File | null }): Promise<
       AxiosResponse<IRecipe> | undefined
     > =>
-      editRecipe({
+      await editRecipe({
         id,
         name,
         description,
@@ -40,7 +40,19 @@ export const useSingleRecipe = (id: string) => {
         servings,
         image,
       }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`recipe-${id}`],
+      });
+      queryClient.refetchQueries({
+        queryKey: [`recipe-${id}`],
+      });
+    },
   });
 
-  return { singleRecipe, edit };
+  const remove = useMutation({
+    mutationKey: ["deleteRecipe"],
+  });
+
+  return { singleRecipe, edit, remove };
 };

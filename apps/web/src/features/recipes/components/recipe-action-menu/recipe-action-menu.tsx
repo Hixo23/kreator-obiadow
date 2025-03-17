@@ -33,11 +33,17 @@ import {
 import Dropzone from "shadcn-dropzone";
 import { useRecipeForm } from "@/features/recipes/hooks/use-recipe-form.ts";
 import { IRecipe } from "@/shared/types";
+import { useState } from "react";
 
 export const RecipeActionMenu = ({ recipe }: { recipe: IRecipe }) => {
-  const { form, onSubmit, error } = useRecipeForm({ action: "edit", recipe });
+  const [isOpen, setIsOpen] = useState(false);
+  const { form, onSubmit, error } = useRecipeForm({
+    action: "edit",
+    recipe,
+    setIsOpen,
+  });
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">

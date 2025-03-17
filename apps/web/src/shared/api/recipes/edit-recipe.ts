@@ -22,7 +22,6 @@ export const editRecipe = async ({
   formData.append("difficulty", difficulty);
   formData.append("dietType", dietType);
   formData.append("servings", servings.toString());
-  console.log(formData);
   if (image instanceof File) {
     formData.append("file", image);
   }
@@ -32,5 +31,6 @@ export const editRecipe = async ({
       "Content-Type": "multipart/form-data",
     },
   });
-  return response?.data;
+
+  return response;
 };

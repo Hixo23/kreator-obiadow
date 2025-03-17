@@ -87,10 +87,6 @@ export default function AppSidebar() {
     signout.mutate();
   };
 
-  const handleOpenSettings = () => {
-    console.log("Settings clicked");
-  };
-
   return (
     <Sidebar className="border-r">
       <SidebarHeader>
@@ -185,7 +181,7 @@ export default function AppSidebar() {
             </SidebarMenuItem>
             <SettingsModal>
               <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleOpenSettings}>
+                <SidebarMenuButton>
                   <Settings className="mr-2 h-4 w-4" />
                   Ustawienia
                 </SidebarMenuButton>
