@@ -43,7 +43,6 @@ export class RecipesService {
       throw new BadRequestException();
 
     const imageUpload = await this.cloudinaryService.uploadFile(file);
-    console.log(imageUpload.url);
     if (imageUpload.error) throw new InternalServerErrorException();
 
     const recipe = await this.prismaService.recipe.create({
@@ -95,16 +94,6 @@ export class RecipesService {
     }: UpdateRecipeDto,
     file: Express.Multer.File,
   ) {
-    console.log(
-      authorId,
-      description,
-      dietType,
-      difficulty,
-      ingredients,
-      name,
-      preparationProcess,
-    );
-
     const isRecipeExists = await this.findOne(id);
 
     if (!isRecipeExists) throw new NotFoundException();

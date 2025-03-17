@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addRecipeSchema } from "@/shared/lib/schemas.ts";
 import { addRecipe, AddRecipeError } from "@/shared/api/recipes/add-recipe.ts";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate } from "react-router";
-import { editRecipe } from "@/shared/api/recipes/edit-recipe.ts";
 import { IRecipe } from "@/shared/types";
+import { useSingleRecipe } from "@/features/recipes/hooks/use-single-recipe.ts";
 
 type Difficulty = "easy" | "medium" | "hard";
 type DietType = "vegan" | "vegetarian" | "meat";
@@ -14,11 +14,14 @@ type DietType = "vegan" | "vegetarian" | "meat";
 export const useRecipeForm = ({
   recipe,
   action,
+  setIsOpen,
 }: {
-  recipe?: IRecipe & { image?: File };
+  recipe?: IRecipe & { image?: File | null };
   action: "create" | "edit";
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [error, setError] = useState("");
+  const { edit } = useSingleRecipe(recipe?.id ?? "");
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof addRecipeSchema>>({
     resolver: zodResolver(addRecipeSchema),
@@ -38,16 +41,16 @@ export const useRecipeForm = ({
   const onSubmit = async (values: z.infer<typeof addRecipeSchema>) => {
     try {
       if (action === "edit" && recipe!.id) {
-        console.log("Edit values ", values);
-        await editRecipe({ id: recipe?.id ?? "", ...values });
+        edit.mutate({ id: recipe?.id ?? "", ...values });
+        setIsOpen && setIsOpen(false);
       } else if (action === "create") {
         if (values.image === null) {
           setError("Image is required");
           return;
         }
         await addRecipe(values);
+        navigate("/");
       }
-      navigate("/");
     } catch (error) {
       const err = error as AddRecipeError;
       setError(err.message);

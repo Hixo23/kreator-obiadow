@@ -20,7 +20,6 @@ export class CommentController {
   @Post()
   @UseGuards(AuthGuard('jwt'))
   create(@Body() createCommentDto: CreateCommentDto) {
-    console.log(createCommentDto);
     return this.commentService.create(createCommentDto);
   }
 

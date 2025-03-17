@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const user = useUser();
   const navigate = useNavigate();
-  console.log(user);
   useEffect(() => {
     if (!user?.user || user?.error) navigate("/auth/sign-in");
   }, [navigate, user?.error, user?.user]);
