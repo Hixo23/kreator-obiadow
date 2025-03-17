@@ -3,8 +3,11 @@ import { getRecipe } from "@/shared/api/recipes/get-recipe.ts";
 import { IRecipe } from "@/shared/types";
 import { AxiosResponse } from "axios";
 import { editRecipe } from "@/shared/api/recipes/edit-recipe.ts";
+import { deleteRecipe } from "@/shared/api/recipes/delete-recipe.ts";
+import { useNavigate } from "react-router";
 
 export const useSingleRecipe = (id: string) => {
+  const navigate = useNavigate();
   const singleRecipe = () =>
     useQuery({
       queryKey: ["recipe"],
@@ -42,5 +45,13 @@ export const useSingleRecipe = (id: string) => {
       }),
   });
 
-  return { singleRecipe, edit };
+  const remove = useMutation({
+    mutationKey: ["deleteRecipe"],
+    mutationFn: async (id: string) => await deleteRecipe({ id }),
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
+
+  return { singleRecipe, edit, remove };
 };
