@@ -1,7 +1,10 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -92,6 +95,22 @@ export class RecipesService {
     }: UpdateRecipeDto,
     file: Express.Multer.File,
   ) {
+    console.log(
+      authorId,
+      description,
+      dietType,
+      difficulty,
+      ingredients,
+      name,
+      preparationProcess,
+    );
+
+    const isRecipeExists = await this.findOne(id);
+
+    if (!isRecipeExists) throw new NotFoundException();
+
+    if (isRecipeExists.authorId !== authorId)
+      throw new ForbiddenException('Ten przepis nie należy do ciebie');
     if (file) {
       const imageUpload = await this.cloudinaryService.uploadFile(file);
       if (imageUpload.error) throw new InternalServerErrorException();
@@ -109,7 +128,7 @@ export class RecipesService {
     const updatedRecipe = await this.prismaService.recipe.update({
       where: {
         id: id,
-        authorId: authorId,
+        authorId,
       },
       data: {
         description,
