@@ -8,14 +8,12 @@ import { useNavigate } from "react-router";
 
 export const useSingleRecipe = (id: string) => {
   const navigate = useNavigate();
-  const singleRecipe = () =>
-    useQuery({
-      queryKey: ["recipe"],
-      queryFn: async (): Promise<AxiosResponse<IRecipe> | null> =>
-        await getRecipe(id),
-    });
+  const singleRecipe = useQuery({
+    queryKey: ["recipe"],
+    queryFn: async (): Promise<AxiosResponse<IRecipe> | null> =>
+      await getRecipe(id),
+  });
   const queryClient = useQueryClient();
-  
 
   const edit = useMutation({
     mutationKey: ["editRecipe"],

@@ -35,9 +35,9 @@ import { useRecipeForm } from "@/features/recipes/hooks/use-recipe-form.ts";
 import { IRecipe } from "@/shared/types";
 
 import { useSingleRecipe } from "@/features/recipes/hooks/use-single-recipe.ts";
+import { useState } from "react";
 
 export const RecipeActionMenu = ({ recipe }: { recipe: IRecipe }) => {
-  const { form, onSubmit, error } = useRecipeForm({ action: "edit", recipe });
   const [isOpen, setIsOpen] = useState(false);
   const { form, onSubmit, error } = useRecipeForm({
     action: "edit",
