@@ -19,5 +19,5 @@ export const addRecipeSchema = z.object({
   servings: z.coerce
     .number()
     .min(1, { message: "Porcje muszą być większe niż 0" }),
-  image: z.instanceof(File).nullable(),
+  image: z.instanceof(File).nullish(),
 });

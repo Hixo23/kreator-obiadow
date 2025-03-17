@@ -60,7 +60,7 @@ export class RecipesController {
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  @UseInterceptors(FileInterceptor('file', {}))
+  @UseInterceptors(FileInterceptor('file'))
   update(
     @Param('id') id: string,
     @Body() updateRecipeDto: UpdateRecipeDto,
@@ -71,8 +71,21 @@ export class RecipesController {
       }),
     )
     file: Express.Multer.File,
+    @Req() request: Request,
   ) {
-    return this.recipesService.update(id, updateRecipeDto, file);
+    const user = request.user as {
+      id: string;
+      username: string;
+      password: string;
+      email: string;
+      role: Role;
+      recipes: Recipe[];
+    };
+    return this.recipesService.update(
+      id,
+      { ...updateRecipeDto, authorId: user.id },
+      file,
+    );
   }
 
   @Delete(':id')

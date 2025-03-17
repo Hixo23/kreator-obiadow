@@ -2,12 +2,12 @@ export interface IRecipe {
   id: string;
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrl?: string | undefined;
   preparationProcess: string;
   ingredients: string;
   dietType: string;
   difficulty: string;
-  authorId: string;
+  authorId?: string;
   preparationTime: number;
   servings: number;
 }
