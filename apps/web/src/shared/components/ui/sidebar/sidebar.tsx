@@ -40,7 +40,7 @@ import {
 import { useState } from "react";
 import { useUser } from "@/shared/contexts/userContext";
 import { useSignout } from "@/shared/hooks/use-signout";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { SettingsModal } from "../../modals/settings-modal/settings-modal";
 
 const mealTypes = [
@@ -87,10 +87,6 @@ export default function AppSidebar() {
     signout.mutate();
   };
 
-  const handleAddMeal = () => {
-    navigate("/recipe/add");
-  };
-
   const handleOpenSettings = () => {
     console.log("Settings clicked");
   };
@@ -100,9 +96,9 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center justify-between px-4 py-2">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-nowrap">
+            <NavLink to="/" className="text-lg font-semibold text-nowrap">
               Kreator obiadów
-            </h2>
+            </NavLink>
           </div>
           {user?.user ? (
             <DropdownMenu>
@@ -180,9 +176,11 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton onClick={handleAddMeal}>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Dodaj nowy posiłek
+              <SidebarMenuButton className="cursor-pointer" asChild>
+                <NavLink to="/recipe/add">
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Dodaj nowy posiłek
+                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SettingsModal>

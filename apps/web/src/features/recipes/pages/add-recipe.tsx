@@ -20,7 +20,7 @@ import { Textarea } from "@/shared/components/ui/shadcn/textarea.tsx";
 import { useRecipeForm } from "@/features/recipes/hooks/use-recipe-form.ts";
 
 export const AddRecipePage = () => {
-  const { form, onSubmit, error } = useRecipeForm();
+  const { form, onSubmit, error } = useRecipeForm({ action: "create" });
   return (
     <div className=" w-full ">
       <Form {...form}>

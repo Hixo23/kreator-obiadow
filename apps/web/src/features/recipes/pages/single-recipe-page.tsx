@@ -1,10 +1,16 @@
 import { useNavigate, useParams } from "react-router";
 import { useSingleRecipe } from "@/features/recipes/hooks/use-single-recipe.ts";
+import { RecipeActionMenu } from "@/features/recipes/components/recipe-action-menu/recipe-action-menu.tsx";
+import { IRecipe } from "@/shared/types";
+import { useUser } from "@/shared/contexts/userContext.tsx";
 
 export const SingleRecipePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: recipe, isLoading } = useSingleRecipe(id ?? "");
+  const user = useUser();
+  const { singleRecipe } = useSingleRecipe(id ?? "");
+
+  const { data: recipe, isLoading } = singleRecipe();
   if (!id || !recipe) navigate("/");
 
   if (isLoading) return <h1>Loading</h1>;
@@ -12,6 +18,11 @@ export const SingleRecipePage = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-bold">{recipe?.data.name}</h1>
+        {user?.user?.id === recipe?.data.authorId ? (
+          <div className="flex items-center space-x-2">
+            <RecipeActionMenu recipe={recipe?.data as unknown as IRecipe} />
+          </div>
+        ) : null}
       </div>
 
       <div className="mb-8">
@@ -28,7 +39,9 @@ export const SingleRecipePage = () => {
           <ul className="list-disc list-inside space-y-2">
             {recipe?.data.ingredients
               .split(",")
-              .map((ingredient, index) => <li key={index}>{ingredient}</li>)}
+              .map((ingredient: string, index: number) => (
+                <li key={index}>{ingredient}</li>
+              ))}
           </ul>
         </div>
 
