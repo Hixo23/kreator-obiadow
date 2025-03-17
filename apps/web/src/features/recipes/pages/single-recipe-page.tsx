@@ -8,9 +8,10 @@ export const SingleRecipePage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const user = useUser();
-  const { singleRecipe } = useSingleRecipe(id ?? "");
+  const {
+    singleRecipe: { data: recipe, isLoading },
+  } = useSingleRecipe(id ?? "");
 
-  const { data: recipe, isLoading } = singleRecipe();
   if (!id || !recipe) navigate("/");
 
   if (isLoading) return <h1>Loading</h1>;
