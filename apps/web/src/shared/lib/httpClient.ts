@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosError } from "axios";
+import { ApiError } from "./api-error";
 
 export const baseClient = axios.create({
   baseURL: import.meta.env.VITE_SERVER_URL,
@@ -7,31 +8,17 @@ export const baseClient = axios.create({
 
 const handleError = (error: unknown) => {
   if (axios.isAxiosError(error)) {
-    const axiosError = error as AxiosError;
-
-    switch (axiosError.response?.status) {
-      case 401: {
-        throw new Error("Nie autoryzowany");
-      }
-      case 403: {
-        throw new Error("Brak dostępu");
-      }
-      case 404: {
-        throw new Error("Zasób nie znaleziony");
-      }
-      case 500:
-      case 502:
-      case 503: {
-        throw new Error("Błąd serwera");
-      }
-    }
+    const axiosError = error as AxiosError<{ message: string }>;
 
     if (axiosError.code === "ECONNABORTED" || !axiosError.response) {
       throw new Error("Problem z połączeniem");
     }
-  }
 
-  throw new Error("Nieoczekiwany błąd");
+    throw new ApiError({
+      statusCode: axiosError.status ?? 500,
+      message: axiosError.response.data.message
+    })
+  }
 };
 
 export const httpClient = {
@@ -40,6 +27,7 @@ export const httpClient = {
       return await baseClient.get(url, config);
     } catch (error) {
       handleError(error);
+      return null
     }
   },
 
