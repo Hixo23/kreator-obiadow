@@ -15,10 +15,10 @@ export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser({ email, password }: LoginDto) {
-    if (!email || !password) throw new BadRequestException();
+    if (!email || !password) throw new BadRequestException("Brakuje danych");
 
     const user = await this.prismaService.user.findFirst({
       where: {
@@ -29,11 +29,11 @@ export class AuthService {
       },
     });
 
-    if (!user) throw new NotFoundException();
+    if (!user) throw new NotFoundException("Nie znaleziono użytkownika z takim mailem!");
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordCorrect) throw new UnauthorizedException();
+    if (!isPasswordCorrect) throw new UnauthorizedException("Błędne dane");
 
     return user;
   }
