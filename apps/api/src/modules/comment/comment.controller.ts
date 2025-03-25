@@ -23,9 +23,9 @@ export class CommentController {
     return this.commentService.create(createCommentDto);
   }
 
-  @Get(':commentId')
-  findAll(@Param('commentId') commentId: string) {
-    return this.commentService.findAll(commentId);
+  @Get(':recipeId')
+  findAll(@Param('recipeId') recipeId: string) {
+    return this.commentService.findAll(recipeId);
   }
 
   @Patch(':id')

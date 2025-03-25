@@ -7,4 +7,4 @@ import { PrismaService } from 'src/prisma.service';
   controllers: [CommentController],
   providers: [CommentService, PrismaService],
 })
-export class CommentModule { }
+export class CommentModule {}
