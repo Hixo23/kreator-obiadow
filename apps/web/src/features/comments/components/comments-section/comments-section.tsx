@@ -10,6 +10,10 @@ export const CommentsSection = ({ recipeId }: { recipeId: string }) => {
     isError,
     error,
   } = useGetComments({ recipeId });
+
+  if (isLoading) return <h1>Loading...</h1>
+
+  if (isError) return <h1>{error.message}</h1>
   return (
     <div className="container w-screen flex flex-col mx-auto  gap-8">
       <AddComment recipeId={recipeId} />
