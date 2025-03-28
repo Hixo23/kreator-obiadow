@@ -1,7 +1,6 @@
 import { httpClient } from "@/shared/lib/httpClient";
 import { z } from "zod";
 import { addRecipeSchema } from "@/shared/lib/schemas.ts";
-import axios from "axios";
 
 export type AddRecipeError = {
   message: string;

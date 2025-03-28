@@ -39,6 +39,9 @@ export class CommentService {
       where: {
         id,
       },
+      include: {
+        author: true,
+      },
     });
 
     return comment;
@@ -48,6 +51,9 @@ export class CommentService {
     const comments = await this.prismaService.comment.findMany({
       where: {
         recipeId: id,
+      },
+      include: {
+        author: true,
       },
     });
 

@@ -121,7 +121,9 @@ export const SignUp = () => {
                   </FormItem>
                 )}
               />
-              {register.isError && <p className="text-red-500">{register.error.message}</p>}
+              {register.isError && (
+                <p className="text-red-500">{register.error.message}</p>
+              )}
               <p>
                 Masz już konto?{" "}
                 <NavLink className="text-indigo-400" to={"/auth/sign-in"}>

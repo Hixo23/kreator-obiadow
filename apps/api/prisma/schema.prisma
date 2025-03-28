@@ -41,7 +41,7 @@ model Recipe {
 model Comment {
   id       String @id @default(uuid())
   content  String
-  rating   Int
+  rating   Int    @default(0)
   recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recipeId String
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)

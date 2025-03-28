@@ -7,7 +7,13 @@ import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
-  imports: [UserModule, AuthModule, RecipesModule, CloudinaryModule, CommentModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    RecipesModule,
+    CloudinaryModule,
+    CommentModule,
+  ],
   controllers: [AppController],
 })
 export class AppModule {}
