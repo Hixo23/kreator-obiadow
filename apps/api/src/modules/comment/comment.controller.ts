@@ -7,11 +7,14 @@ import {
   Param,
   Delete,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
+import { RequestUser } from 'src/types';
 
 @Controller('comment')
 export class CommentController {
@@ -19,19 +22,31 @@ export class CommentController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
+  create(@Body() createCommentDto: CreateCommentDto, @Req() req: Request) {
+    const user = req.user as RequestUser;
+    return this.commentService.create({
+      ...createCommentDto,
+      authorId: user.id,
+    });
   }
 
-  @Get(':commentId')
-  findAll(@Param('commentId') commentId: string) {
-    return this.commentService.findAll(commentId);
+  @Get(':recipeId')
+  findAll(@Param('recipeId') recipeId: string) {
+    return this.commentService.findAll(recipeId);
   }
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
-    return this.commentService.update(id, updateCommentDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateCommentDto: UpdateCommentDto,
+    @Req() req: Request,
+  ) {
+    const user = req.user as RequestUser;
+    return this.commentService.update(id, {
+      ...updateCommentDto,
+      authorId: user.id,
+    });
   }
 
   @Delete(':id')

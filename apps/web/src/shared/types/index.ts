@@ -19,3 +19,12 @@ export interface IUser {
   id: string;
   recipes: IRecipe[];
 }
+
+export interface IComment {
+  id: string;
+  content: string;
+  rating: number;
+  recipeId: string;
+  authorId: string;
+  author: IUser;
+}
