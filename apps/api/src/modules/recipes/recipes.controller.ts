@@ -23,7 +23,7 @@ import { Recipe, Role } from '@prisma/client';
 
 @Controller('recipe')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipesService) {}
+  constructor(private readonly recipesService: RecipesService) { }
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
@@ -56,6 +56,11 @@ export class RecipesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.recipesService.findOne(id);
+  }
+
+  @Get('user/:userId')
+  findByUser(@Param('userId') userId: string) {
+    return this.recipesService.finyByUser(userId)
   }
 
   @Patch(':id')
