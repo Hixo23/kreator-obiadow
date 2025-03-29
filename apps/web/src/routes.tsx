@@ -6,6 +6,7 @@ import { SignUp } from "./features/auth/pages/sign-up";
 import { AddRecipePage } from "@/features/recipes/pages/add-recipe.tsx";
 import { ProtectedRoute } from "@/shared/components/protected-route.tsx";
 import { SingleRecipePage } from "@/features/recipes/pages/single-recipe-page.tsx";
+import { UserProfile } from "./features/user-profile/pages/user-profile";
 
 export const Router = () => {
   return (
@@ -23,7 +24,11 @@ export const Router = () => {
               }
             />
             <Route path=":id" element={<SingleRecipePage />} />
+
           </Route>
+
+          <Route path="/profile" element={
+            <UserProfile />} />
         </Route>
         <Route path="auth">
           <Route path="sign-in" element={<SignIn />} />

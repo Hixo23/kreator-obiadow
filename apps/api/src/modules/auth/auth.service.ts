@@ -26,6 +26,7 @@ export class AuthService {
       },
       include: {
         recipes: true,
+        Comment: true
       },
     });
 
