@@ -10,7 +10,7 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
   async create({ authorId, content, rating, recipeId }: CreateCommentDto) {
     if (!authorId || !content || !rating || !recipeId)
       throw new BadRequestException();
@@ -20,7 +20,7 @@ export class CommentService {
         rating,
         author: {
           connect: {
-            id: authorId,
+            userId: authorId,
           },
         },
         recipe: {

@@ -13,14 +13,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
-import { Recipe, Role } from '@prisma/client';
+import { RequestUser } from 'src/types';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   @Post('/register')
   async register(@Body() body: CreateUserDto) {
@@ -30,14 +30,8 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('/login')
   async login(@Req() req: Request, @Res() res: Response) {
-    const user = req.user as {
-      id: string;
-      username: string;
-      password: string;
-      email: string;
-      role: Role;
-      recipes: Recipe[];
-    };
+    const user = req.user
+
     const userLogin = await this.authService.login(user);
     res.cookie('token', userLogin.access_token, {
       httpOnly: true,
@@ -48,7 +42,7 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/me')
   async getUser(@Req() req: Request) {
-    return req.user;
+    return await this.userService.findOne((req.user as unknown as RequestUser).email)
   }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/logout')

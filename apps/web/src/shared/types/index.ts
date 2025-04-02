@@ -14,10 +14,16 @@ export interface IRecipe {
 
 export interface IUser {
   role: string;
-  username: string;
   email: string;
   id: string;
+  profile: IProfile
+}
+
+export interface IProfile {
+  username: string;
+  description: string;
   recipes: IRecipe[];
+  id: string
 }
 
 export interface IComment {
@@ -26,5 +32,5 @@ export interface IComment {
   rating: number;
   recipeId: string;
   authorId: string;
-  author: IUser;
+  author: IProfile;
 }

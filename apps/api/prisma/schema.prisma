@@ -14,12 +14,10 @@ enum Role {
 
 model User {
   id       String    @id @default(uuid())
-  username String
   password String
-  email    String
-  recipes  Recipe[]
-  Comment  Comment[]
+  email    String    @unique
   role     Role      @default(USER)
+  profile Profile?
 }
 
 model Recipe {
@@ -33,7 +31,7 @@ model Recipe {
   dietType           String
   difficulty         String
   servings           Int       @default(0)
-  author             User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author             Profile      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId           String
   comments           Comment[]
 }
@@ -44,6 +42,18 @@ model Comment {
   rating   Int    @default(0)
   recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   recipeId String
-  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  author   Profile   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId String
 }
+
+
+model Profile {
+    id  String @id @default(uuid())
+    username String
+    description String
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    userId String @unique
+    recipes Recipe[] 
+    comments  Comment[]
+
+  }

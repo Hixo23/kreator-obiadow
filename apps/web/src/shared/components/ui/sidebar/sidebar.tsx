@@ -102,17 +102,17 @@ export default function AppSidebar() {
                 <Button variant="ghost" className="h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={user.user.username}
-                      alt={user.user.username}
+                      src={user.user.profile.username}
+                      alt={user.user.profile.username}
                     />
                     <AvatarFallback>
-                      {user.user.username.charAt(0)}
+                      {user.user.profile.username.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>{user.user.username}</DropdownMenuLabel>
+                <DropdownMenuLabel>{user.user.profile.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleSignOut}>
                   Wyloguj się

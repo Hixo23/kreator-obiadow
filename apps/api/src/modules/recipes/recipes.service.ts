@@ -58,9 +58,9 @@ export class RecipesService {
         servings: +servings,
         author: {
           connect: {
-            id: authorId,
-          },
-        },
+            userId: authorId
+          }
+        }
       },
     });
 

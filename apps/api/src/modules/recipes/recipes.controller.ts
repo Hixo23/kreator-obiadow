@@ -20,6 +20,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { Recipe, Role } from '@prisma/client';
+import { RequestUser } from 'src/types';
 
 @Controller('recipe')
 export class RecipesController {
@@ -33,14 +34,7 @@ export class RecipesController {
     @UploadedFile() file: Express.Multer.File,
     @Req() request: Request,
   ) {
-    const user = request.user as {
-      id: string;
-      username: string;
-      password: string;
-      email: string;
-      role: Role;
-      recipes: Recipe[];
-    };
+    const user = request.user as unknown as RequestUser
     return this.recipesService.create({
       ...createRecipeDto,
       file,
@@ -78,14 +72,7 @@ export class RecipesController {
     file: Express.Multer.File,
     @Req() request: Request,
   ) {
-    const user = request.user as {
-      id: string;
-      username: string;
-      password: string;
-      email: string;
-      role: Role;
-      recipes: Recipe[];
-    };
+    const user = request.user
     return this.recipesService.update(
       id,
       { ...updateRecipeDto, authorId: user.id },
