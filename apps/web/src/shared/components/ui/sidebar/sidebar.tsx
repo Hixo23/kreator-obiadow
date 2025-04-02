@@ -40,7 +40,7 @@ import {
 import { useState } from "react";
 import { useUser } from "@/shared/contexts/userContext";
 import { useSignout } from "@/shared/hooks/use-signout";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { SettingsModal } from "../../modals/settings-modal/settings-modal";
 
 const mealTypes = [
@@ -111,9 +111,12 @@ export default function AppSidebar() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent className="space-y-2" align="end">
                 <DropdownMenuLabel>{user.user.profile.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to={"/profile"}>Twój profil</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleSignOut}>
                   Wyloguj się
                 </DropdownMenuItem>
@@ -191,7 +194,7 @@ export default function AppSidebar() {
         </SidebarGroup>
         {user?.user && (
           <div className="px-4 py-2 text-sm text-muted-foreground">
-            Signed in as {user.user.email}
+            Zalogowano jako {user.user.email}
           </div>
         )}
       </SidebarFooter>
