@@ -5,7 +5,7 @@ import { useRecipes } from "@/features/recipes/hooks/use-recipes";
 
 export const UserProfile = () => {
   const user = useUser()
-  const { data: recipes, isLoading } = useRecipes(user?.user?.id);
+  const { data: recipes, isLoading } = useRecipes(user?.user?.profile.id);
   if (!user || !user?.user) return null;
 
 
