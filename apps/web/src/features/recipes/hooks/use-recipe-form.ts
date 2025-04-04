@@ -42,7 +42,9 @@ export const useRecipeForm = ({
     try {
       if (action === "edit" && recipe!.id) {
         edit.mutate({ id: recipe?.id ?? "", ...values });
-        setIsOpen && setIsOpen(false);
+        if (!edit.isError && setIsOpen) {
+          setIsOpen(false);
+        }
       } else if (action === "create") {
         if (values.image === null) {
           setError("Image is required");

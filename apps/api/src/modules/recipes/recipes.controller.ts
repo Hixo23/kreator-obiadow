@@ -19,12 +19,11 @@ import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-import { Recipe, Role } from '@prisma/client';
 import { RequestUser } from 'src/types';
 
 @Controller('recipe')
 export class RecipesController {
-  constructor(private readonly recipesService: RecipesService) { }
+  constructor(private readonly recipesService: RecipesService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
@@ -34,7 +33,7 @@ export class RecipesController {
     @UploadedFile() file: Express.Multer.File,
     @Req() request: Request,
   ) {
-    const user = request.user as unknown as RequestUser
+    const user = request.user as unknown as RequestUser;
     return this.recipesService.create({
       ...createRecipeDto,
       file,
@@ -54,7 +53,7 @@ export class RecipesController {
 
   @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
-    return this.recipesService.finyByUser(userId)
+    return this.recipesService.finyByUser(userId);
   }
 
   @Patch(':id')
@@ -72,10 +71,10 @@ export class RecipesController {
     file: Express.Multer.File,
     @Req() request: Request,
   ) {
-    const user = request.user
+    const user = request.user;
     return this.recipesService.update(
       id,
-      { ...updateRecipeDto, authorId: user.id },
+      { ...updateRecipeDto, authorId: user.profile.id },
       file,
     );
   }

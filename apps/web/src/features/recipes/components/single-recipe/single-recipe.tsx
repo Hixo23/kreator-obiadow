@@ -18,7 +18,7 @@ export const SingleRecipe = ({ recipeId }: { recipeId: string }) => {
     <div className="container mx-auto  py-8">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-bold">{recipe?.data.name}</h1>
-        {user?.user?.id === recipe?.data.authorId ? (
+        {user?.user?.profile.id === recipe?.data.authorId ? (
           <div className="flex items-center space-x-2">
             <RecipeActionMenu recipe={recipe?.data as unknown as IRecipe} />
           </div>

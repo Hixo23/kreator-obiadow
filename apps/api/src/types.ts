@@ -5,11 +5,10 @@ export type RequestUser = {
   password: string;
   email: string;
   role: Role;
-  profile: IProfile
+  profile: IProfile;
 };
-
 
 interface IProfile extends Profile {
   recipes: Recipe[];
-  comments: Comment[]
+  comments: Comment[];
 }
