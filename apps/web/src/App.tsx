@@ -2,8 +2,8 @@ import { RecipeList } from "@/features/recipes/components/recipe-list/recipe-lis
 import { useRecipes } from "./features/recipes/hooks/use-recipes";
 
 function App() {
-  const { data: recipes, isLoading } = useRecipes()
-  if (isLoading || !recipes) return <h1>Looading...</h1>
+  const { data: recipes, isLoading } = useRecipes();
+  if (isLoading || !recipes) return <h1>Loading...</h1>;
   return <RecipeList recipes={recipes} />;
 }
 
