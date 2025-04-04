@@ -53,7 +53,7 @@ export class RecipesController {
 
   @Get('user/:userId')
   findByUser(@Param('userId') userId: string) {
-    return this.recipesService.finyByUser(userId);
+    return this.recipesService.findByUser(userId);
   }
 
   @Patch(':id')
