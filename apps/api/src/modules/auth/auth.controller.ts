@@ -20,7 +20,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   @Post('/register')
   async register(@Body() body: CreateUserDto) {
@@ -30,7 +30,7 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('/login')
   async login(@Req() req: Request, @Res() res: Response) {
-    const user = req.user
+    const { user } = req;
 
     const userLogin = await this.authService.login(user);
     res.cookie('token', userLogin.access_token, {
@@ -42,7 +42,9 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt'))
   @Get('/me')
   async getUser(@Req() req: Request) {
-    return await this.userService.findOne((req.user as unknown as RequestUser).email)
+    return await this.userService.findOne(
+      (req.user as unknown as RequestUser).email,
+    );
   }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/logout')
