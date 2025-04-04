@@ -21,8 +21,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEditProfile } from "../../hooks/use-edit-profile";
+import { ProfileEditForm } from "./profile-edit-form";
 
-const editProfileSchema = z.object({
+export const editProfileSchema = z.object({
   username: z.string().min(4, {
     message: "Twoja nazwa użytkownika nie moze być krótsza niz 4 znaki ",
   }),
@@ -64,39 +65,11 @@ export const ProfileEdit = ({
         <DialogHeader>
           <DialogTitle>Edytuj profil</DialogTitle>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nazwa użytkownika</FormLabel>
-                  <FormControl>
-                    <Input placeholder="elorzelo" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Opis</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Zaawansowany kucharz" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button disabled={isPending} type="submit">
-              Zapisz
-            </Button>
-          </form>
-        </Form>
+        <ProfileEditForm
+          form={form}
+          onSubmit={onSubmit}
+          isPending={isPending}
+        />
       </DialogContent>
     </Dialog>
   );

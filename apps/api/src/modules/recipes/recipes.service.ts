@@ -16,7 +16,7 @@ export class RecipesService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly cloudinaryService: CloudinaryService,
-  ) { }
+  ) {}
 
   async create({
     description,
@@ -58,9 +58,9 @@ export class RecipesService {
         servings: +servings,
         author: {
           connect: {
-            userId: authorId
-          }
-        }
+            userId: authorId,
+          },
+        },
       },
     });
 
@@ -81,14 +81,14 @@ export class RecipesService {
     });
   }
 
-  async finyByUser(userId: string) {
+  async findByUser(userId: string) {
     if (!userId) throw new BadRequestException();
 
     return await this.prismaService.recipe.findMany({
       where: {
-        authorId: userId
-      }
-    })
+        authorId: userId,
+      },
+    });
   }
 
   async update(
