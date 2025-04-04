@@ -10,7 +10,6 @@ export const SingleComment = ({ comment }: { comment: IComment }) => {
   const [isEditing, setIsEditing] = useState(false);
   const user = useUser()
 
-
   return (
     <div
       key={comment.id}
@@ -18,7 +17,7 @@ export const SingleComment = ({ comment }: { comment: IComment }) => {
     >
       <div className="flex items-start space-x-4 ">
         <Avatar>
-          <AvatarFallback>{comment.author.username}</AvatarFallback>
+          <AvatarFallback>{comment.author.username as string}</AvatarFallback>
         </Avatar>
         <div>
           <div className="flex items-center">
@@ -32,7 +31,7 @@ export const SingleComment = ({ comment }: { comment: IComment }) => {
           {isEditing ? <EditComment rating={comment.rating} content={comment.content} commentId={comment.id} setIsEditing={setIsEditing} /> : <p className="text-muted-foreground">{comment.content}</p>}
         </div>
       </div>
-      {user?.user?.id === comment.authorId && <CommentActionMenu commentId={comment.id} setIsEditing={setIsEditing} />}
+      {user?.user?.profile.id === comment.author.id && <CommentActionMenu commentId={comment.id} setIsEditing={setIsEditing} />}
     </div>
   );
 };

@@ -36,7 +36,7 @@ export const AddComment = ({ recipeId }: { recipeId: string }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleAddComment} className="w-full space-y-6">
+      <form onSubmit={handleAddComment} className="md:w-full space-y-6">
         <FormField
           control={form.control}
           name="rating"
@@ -60,7 +60,7 @@ export const AddComment = ({ recipeId }: { recipeId: string }) => {
             <FormItem className="flex flex-col gap-2">
               <FormLabel>Treść komentarza</FormLabel>
               <FormControl>
-                <Input placeholder="Ale super przepis" {...field} />
+                <Input className="md:w-full w-2/3" placeholder="Ale super przepis" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

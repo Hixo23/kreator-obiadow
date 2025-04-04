@@ -58,7 +58,7 @@ export class RecipesService {
         servings: +servings,
         author: {
           connect: {
-            id: authorId,
+            userId: authorId,
           },
         },
       },
@@ -77,6 +77,16 @@ export class RecipesService {
     return await this.prismaService.recipe.findFirst({
       where: {
         id,
+      },
+    });
+  }
+
+  async findByUser(userId: string) {
+    if (!userId) throw new BadRequestException();
+
+    return await this.prismaService.recipe.findMany({
+      where: {
+        authorId: userId,
       },
     });
   }

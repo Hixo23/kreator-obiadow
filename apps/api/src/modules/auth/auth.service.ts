@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -8,7 +9,7 @@ import { PrismaService } from 'src/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { Recipe, User } from '@prisma/client';
+import { RequestUser } from 'src/types';
 
 @Injectable()
 export class AuthService {
@@ -25,8 +26,13 @@ export class AuthService {
         email: email,
       },
       include: {
-        recipes: true,
-      },
+        profile: {
+          include: {
+            comments: true,
+            recipes: true
+          }
+        }
+      }
     });
 
     if (!user) throw new NotFoundException("Nie znaleziono użytkownika z takim mailem!");
@@ -38,20 +44,25 @@ export class AuthService {
     return user;
   }
 
-  async login(user: User & { recipes: Recipe[] }) {
+  async login(user: RequestUser) {
     const mappedUser = this.mapUser(user);
+
     return {
       access_token: this.jwtService.sign(mappedUser),
     };
   }
 
-  mapUser(user: User & { recipes: Recipe[] }) {
+  mapUser(user: RequestUser) {
     return {
       role: user.role,
-      username: user.username,
       email: user.email,
       id: user.id,
-      recipes: user.recipes,
+      profile: {
+        id: user.profile.id,
+        username: user.profile.username,
+        recipes: user.profile.recipes,
+        comments: user.profile.comments
+      }
     };
   }
 }

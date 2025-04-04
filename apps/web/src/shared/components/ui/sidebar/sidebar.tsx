@@ -40,7 +40,7 @@ import {
 import { useState } from "react";
 import { useUser } from "@/shared/contexts/userContext";
 import { useSignout } from "@/shared/hooks/use-signout";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { SettingsModal } from "../../modals/settings-modal/settings-modal";
 
 const mealTypes = [
@@ -88,7 +88,7 @@ export default function AppSidebar() {
   };
 
   return (
-    <Sidebar className="border-r">
+    <Sidebar className="border-r fixed h-full">
       <SidebarHeader>
         <div className="flex items-center justify-between px-4 py-2">
           <div className="flex items-center gap-2">
@@ -102,18 +102,21 @@ export default function AppSidebar() {
                 <Button variant="ghost" className="h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={user.user.username}
-                      alt={user.user.username}
+                      src={user.user.profile.username}
+                      alt={user.user.profile.username}
                     />
                     <AvatarFallback>
-                      {user.user.username.charAt(0)}
+                      {user.user.profile.username.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>{user.user.username}</DropdownMenuLabel>
+              <DropdownMenuContent className="space-y-2" align="end">
+                <DropdownMenuLabel>{user.user.profile.username}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to={"/profile"}>Twój profil</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleSignOut}>
                   Wyloguj się
                 </DropdownMenuItem>
@@ -191,7 +194,7 @@ export default function AppSidebar() {
         </SidebarGroup>
         {user?.user && (
           <div className="px-4 py-2 text-sm text-muted-foreground">
-            Signed in as {user.user.email}
+            Zalogowano jako {user.user.email}
           </div>
         )}
       </SidebarFooter>

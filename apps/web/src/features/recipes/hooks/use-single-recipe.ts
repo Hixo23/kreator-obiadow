@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 export const useSingleRecipe = (id: string) => {
   const navigate = useNavigate();
   const singleRecipe = useQuery({
-    queryKey: ["recipe"],
+    queryKey: ["recipe", id],
     queryFn: async (): Promise<AxiosResponse<IRecipe> | null> =>
       await getRecipe(id),
   });
@@ -45,10 +45,10 @@ export const useSingleRecipe = (id: string) => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`recipe-${id}`],
+        queryKey: [`recipe`, id],
       });
       queryClient.refetchQueries({
-        queryKey: [`recipe-${id}`],
+        queryKey: [`recipe`, id],
       });
     },
   });
