@@ -1,4 +1,3 @@
-import { Button } from "@/shared/components/ui/shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -6,16 +5,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/shadcn/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/shared/components/ui/shadcn/form";
-import { Input } from "@/shared/components/ui/shadcn/input";
-import { Textarea } from "@/shared/components/ui/shadcn/textarea";
 import { IProfile } from "@/shared/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
