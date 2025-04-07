@@ -16,14 +16,17 @@ export interface IUser {
   role: string;
   email: string;
   id: string;
-  profile: IProfile
+  profile: IProfile;
 }
 
 export interface IProfile {
   username: string;
   description: string;
   recipes: IRecipe[];
-  id: string
+  favorite: {
+    recipe: IRecipe;
+  }[];
+  id: string;
 }
 
 export interface IComment {

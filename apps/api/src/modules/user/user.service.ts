@@ -9,7 +9,7 @@ import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UserService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
     if (
       !createUserDto.username ||
@@ -33,10 +33,10 @@ export class UserService {
         password: hashedPassword,
         profile: {
           create: {
-            description: "",
-            username: createUserDto.username
-          }
-        }
+            description: '',
+            username: createUserDto.username,
+          },
+        },
       },
     });
     return { message: 'user created' };
@@ -56,11 +56,15 @@ export class UserService {
         profile: {
           include: {
             comments: true,
-            recipes: true
-          }
-        }
-
-      }
+            recipes: true,
+            favorite: {
+              include: {
+                recipe: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 
