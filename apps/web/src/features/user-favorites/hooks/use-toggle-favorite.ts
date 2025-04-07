@@ -23,13 +23,7 @@ export const useToggleFavorite = ({
       queryClient.invalidateQueries({
         queryKey: ["recipeFavoriteStatus", recipeId, userId as string],
       });
-      queryClient.refetchQueries({
-        queryKey: ["recipeFavoriteStatus", recipeId, userId as string],
-      });
       queryClient.invalidateQueries({
-        queryKey: ["user"],
-      });
-      queryClient.refetchQueries({
         queryKey: ["user"],
       });
     },
