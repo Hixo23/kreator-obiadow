@@ -8,7 +8,7 @@ export const useRecipeFavoriteStatus = ({
   recipeId: string;
   userId?: string;
 }) => {
-  const query = useQuery({
+  return useQuery({
     queryKey: ["recipeFavoriteStatus", recipeId, userId],
     queryFn: async () => {
       if (!userId) {
@@ -20,6 +20,4 @@ export const useRecipeFavoriteStatus = ({
     },
     enabled: !!userId && !!recipeId,
   });
-
-  return query;
 };

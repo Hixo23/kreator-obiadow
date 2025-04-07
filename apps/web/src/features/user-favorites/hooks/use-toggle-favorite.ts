@@ -14,7 +14,7 @@ export const useToggleFavorite = ({
   recipeId: string;
 }) => {
   const queryClient = useQueryClient();
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: async () =>
       isFavorite
         ? await deleteFavorite({ favoriteId })
@@ -28,6 +28,4 @@ export const useToggleFavorite = ({
       });
     },
   });
-
-  return mutation;
 };

@@ -14,7 +14,10 @@ export class FavoritesService {
     if (!createFavoriteDto.recipeId || !createFavoriteDto.userId)
       throw new BadRequestException();
 
-    const existingFavorite = await this.findOne(createFavoriteDto.recipeId);
+    const existingFavorite = await this.findOne(
+      createFavoriteDto.recipeId,
+      createFavoriteDto.userId,
+    );
 
     if (
       existingFavorite &&
