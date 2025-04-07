@@ -6,6 +6,7 @@ import { RecipesModule } from './modules/recipes/recipes.module';
 import { CloudinaryModule } from './modules/cloudinary/cloudinary.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { FavoritesModule } from './modules/favorites/favorites.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ProfileModule } from './modules/profile/profile.module';
     CloudinaryModule,
     CommentModule,
     ProfileModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
 })

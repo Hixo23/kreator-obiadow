@@ -2,11 +2,18 @@ import { useUser } from "@/shared/contexts/userContext";
 import { useNavigate } from "react-router";
 import { useSingleRecipe } from "../../hooks/use-single-recipe";
 import { RecipeActionMenu } from "../recipe-action-menu/recipe-action-menu";
-import { IRecipe } from "@/shared/types";
+import { IRecipe, IUser } from "@/shared/types";
 
-export const SingleRecipe = ({ recipeId }: { recipeId: string }) => {
+export const SingleRecipe = ({
+  recipeId,
+  children,
+  user,
+}: {
+  recipeId: string;
+  children: React.ReactNode;
+  user?: IUser | undefined;
+}) => {
   const navigate = useNavigate();
-  const user = useUser();
   const {
     singleRecipe: { data: recipe, isLoading },
   } = useSingleRecipe(recipeId ?? "");
@@ -18,11 +25,12 @@ export const SingleRecipe = ({ recipeId }: { recipeId: string }) => {
     <div className="container mx-auto  py-8">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-bold">{recipe?.data.name}</h1>
-        {user?.user?.profile.id === recipe?.data.authorId ? (
-          <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2">
+          {children}
+          {user?.profile.id === recipe?.data.authorId ? (
             <RecipeActionMenu recipe={recipe?.data as unknown as IRecipe} />
-          </div>
-        ) : null}
+          ) : null}
+        </div>
       </div>
 
       <div className="mb-8">
