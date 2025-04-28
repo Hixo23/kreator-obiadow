@@ -14,6 +14,7 @@ import { Request, Response } from 'express';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { UserService } from '../user/user.service';
 import { RequestUser } from 'src/types';
+import { CurrentUser } from '../user/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -29,9 +30,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Req() req: Request, @Res() res: Response) {
-    const { user } = req;
-
+  async login(@CurrentUser() user, @Res() res: Response) {
     const userLogin = await this.authService.login(user);
     res.cookie('token', userLogin.access_token, {
       httpOnly: true,
@@ -41,10 +40,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/me')
-  async getUser(@Req() req: Request) {
-    return await this.userService.findOne(
-      (req.user as unknown as RequestUser).email,
-    );
+  async getUser(@CurrentUser() user: RequestUser) {
+    return await this.userService.findOne(user.email);
   }
   @UseGuards(AuthGuard('jwt'))
   @Delete('/logout')

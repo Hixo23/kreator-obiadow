@@ -19,6 +19,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { RequestUser } from 'src/types';
+import { CurrentUser } from '../user/user.decorator';
 
 @Controller('recipe')
 export class RecipesController {
@@ -30,9 +31,8 @@ export class RecipesController {
   create(
     @Body() createRecipeDto: CreateRecipeDto,
     @UploadedFile() file: Express.Multer.File,
-    @Req() request: Request,
+    @CurrentUser() user: RequestUser,
   ) {
-    const user = request.user as unknown as RequestUser;
     return this.recipesService.create({
       ...createRecipeDto,
       file,
@@ -68,9 +68,8 @@ export class RecipesController {
       }),
     )
     file: Express.Multer.File,
-    @Req() request: Request,
+    @CurrentUser() user: RequestUser,
   ) {
-    const user = request.user;
     return this.recipesService.update(
       id,
       { ...updateRecipeDto, authorId: user.profile.id },

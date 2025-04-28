@@ -12,6 +12,8 @@ import { FavoritesService } from './favorites.service';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../user/user.decorator';
+import { RequestUser } from 'src/types';
 
 @Controller('favorites')
 export class FavoritesController {
@@ -19,10 +21,13 @@ export class FavoritesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() createFavoriteDto: CreateFavoriteDto, @Req() req: Request) {
+  create(
+    @Body() createFavoriteDto: CreateFavoriteDto,
+    @CurrentUser() user: RequestUser,
+  ) {
     return this.favoritesService.create({
       ...createFavoriteDto,
-      userId: req.user.profile.id,
+      userId: user.profile.id,
     });
   }
 
@@ -32,13 +37,13 @@ export class FavoritesController {
   }
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
-  findOne(@Param('id') id: string, @Req() req: Request) {
-    return this.favoritesService.findOne(id, req.user.profile.id);
+  findOne(@Param('id') id: string, @CurrentUser() user: RequestUser) {
+    return this.favoritesService.findOne(id, user.profile.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req: Request) {
-    return this.favoritesService.remove(id, req.user.profile.id);
+  remove(@Param('id') id: string, @CurrentUser() user: RequestUser) {
+    return this.favoritesService.remove(id, user.profile.id);
   }
 }

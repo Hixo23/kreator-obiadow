@@ -12,6 +12,8 @@ import { ProfileService } from './profile.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { CurrentUser } from '../user/user.decorator';
+import { RequestUser } from 'src/types';
 
 @Controller('profile')
 export class ProfileController {
@@ -29,8 +31,11 @@ export class ProfileController {
 
   @UseGuards(AuthGuard('jwt'))
   @Patch()
-  update(@Body() updateProfileDto: UpdateProfileDto, @Req() req: Request) {
-    return this.profileService.update(req.user.profile.id, updateProfileDto);
+  update(
+    @Body() updateProfileDto: UpdateProfileDto,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.profileService.update(user.profile.id, updateProfileDto);
   }
 
   @Delete(':id')

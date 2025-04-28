@@ -14,6 +14,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { RequestUser } from 'src/types';
+import { CurrentUser } from '../user/user.decorator';
 
 @Controller('comment')
 export class CommentController {
@@ -21,8 +22,10 @@ export class CommentController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  create(@Body() createCommentDto: CreateCommentDto, @Req() req: Request) {
-    const user = req.user as unknown as RequestUser;
+  create(
+    @Body() createCommentDto: CreateCommentDto,
+    @CurrentUser() user: RequestUser,
+  ) {
     return this.commentService.create({
       ...createCommentDto,
       authorId: user.id,
@@ -39,9 +42,8 @@ export class CommentController {
   update(
     @Param('id') id: string,
     @Body() updateCommentDto: CreateCommentDto,
-    @Req() req: Request,
+    @CurrentUser() user: RequestUser,
   ) {
-    const user = req.user as unknown as RequestUser;
     return this.commentService.update(id, {
       ...updateCommentDto,
       authorId: user.id,
