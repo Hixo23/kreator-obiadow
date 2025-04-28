@@ -1,4 +1,8 @@
-export class CreateFavoriteDto {
-  readonly userId: string;
-  readonly recipeId: string;
-}
+import { z } from 'zod';
+
+export const CreateFavoriteSchema = z.object({
+  userId: z.string(),
+  recipeId: z.string(),
+});
+
+export type CreateFavoriteDto = z.infer<typeof CreateFavoriteSchema>;

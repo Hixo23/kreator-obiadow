@@ -4,41 +4,45 @@ import {
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { CreateFavoriteDto } from './dto/create-favorite.dto';
+import {
+  CreateFavoriteDto,
+  CreateFavoriteSchema,
+} from './dto/create-favorite.dto';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class FavoritesService {
   constructor(private readonly prismaService: PrismaService) {}
   async create(createFavoriteDto: CreateFavoriteDto) {
-    if (!createFavoriteDto.recipeId || !createFavoriteDto.userId)
-      throw new BadRequestException();
+    try {
+      const {
+        data: { recipeId, userId },
+      } = CreateFavoriteSchema.safeParse(createFavoriteDto);
+      const existingFavorite = await this.findOne(recipeId, userId);
 
-    const existingFavorite = await this.findOne(
-      createFavoriteDto.recipeId,
-      createFavoriteDto.userId,
-    );
+      if (existingFavorite && existingFavorite.profileId === userId)
+        throw new ConflictException();
 
-    if (
-      existingFavorite &&
-      existingFavorite.profileId === createFavoriteDto.userId
-    )
-      throw new ConflictException();
-
-    return await this.prismaService.favorite.create({
-      data: {
-        profile: {
-          connect: {
-            id: createFavoriteDto.userId,
+      return await this.prismaService.favorite.create({
+        data: {
+          profile: {
+            connect: {
+              id: userId,
+            },
+          },
+          recipe: {
+            connect: {
+              id: recipeId,
+            },
           },
         },
-        recipe: {
-          connect: {
-            id: createFavoriteDto.recipeId,
-          },
-        },
-      },
-    });
+      });
+    } catch (error) {
+      if (error instanceof ConflictException) {
+        throw new ConflictException('Favorite already exists');
+      }
+      throw new BadRequestException('Invalid data');
+    }
   }
 
   async findAll() {

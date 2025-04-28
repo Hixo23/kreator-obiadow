@@ -4,34 +4,45 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import {
+  CreateCommentDto,
+  CreateCommentSchema,
+} from './dto/create-comment.dto';
 import { PrismaService } from 'src/prisma.service';
+import { z } from 'zod';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly prismaService: PrismaService) { }
-  async create({ authorId, content, rating, recipeId }: CreateCommentDto) {
-    if (!authorId || !content || !rating || !recipeId)
-      throw new BadRequestException();
-    const comment = await this.prismaService.comment.create({
-      data: {
-        content,
-        rating,
-        author: {
-          connect: {
-            userId: authorId,
+  constructor(private readonly prismaService: PrismaService) {}
+  async create(data: CreateCommentDto) {
+    try {
+      const {
+        data: { content, rating, authorId, recipeId },
+      } = CreateCommentSchema.safeParse(data);
+      const comment = await this.prismaService.comment.create({
+        data: {
+          content,
+          rating,
+          author: {
+            connect: {
+              userId: authorId,
+            },
+          },
+          recipe: {
+            connect: {
+              id: recipeId,
+            },
           },
         },
-        recipe: {
-          connect: {
-            id: recipeId,
-          },
-        },
-      },
-    });
+      });
 
-    return comment;
+      return comment;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        throw new BadRequestException(error.formErrors.fieldErrors);
+      }
+      throw new BadRequestException('Invalid data');
+    }
   }
 
   async findOne(id: string) {
@@ -60,7 +71,7 @@ export class CommentService {
     return comments;
   }
 
-  async update(id: string, { rating, content }: UpdateCommentDto) {
+  async update(id: string, { rating, content }: CreateCommentDto) {
     const commentExists = await this.findOne(id);
 
     if (!commentExists) throw new NotFoundException();

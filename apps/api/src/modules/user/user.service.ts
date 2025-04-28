@@ -3,43 +3,50 @@ import {
   ConflictException,
   Injectable,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto, createUserSchema } from './dto/create-user.dto';
+import { UpdateUserDto, updateUserSchema } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { z } from 'zod';
 @Injectable()
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
   async create(createUserDto: CreateUserDto) {
-    if (
-      !createUserDto.username ||
-      !createUserDto.email ||
-      !createUserDto.password
-    ) {
-      throw new BadRequestException();
-    }
+    try {
+      const {
+        data: { email, password, username },
+      } = createUserSchema.safeParse(createUserDto);
 
-    const userIsExist = await this.findOne(createUserDto.email);
+      const userIsExist = await this.findOne(email);
 
-    if (userIsExist) {
-      throw new ConflictException();
-    }
+      if (userIsExist) {
+        throw new ConflictException();
+      }
 
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 1);
+      const hashedPassword = await bcrypt.hash(password, 1);
 
-    await this.prismaService.user.create({
-      data: {
-        email: createUserDto.email,
-        password: hashedPassword,
-        profile: {
-          create: {
-            description: '',
-            username: createUserDto.username,
+      await this.prismaService.user.create({
+        data: {
+          email: email,
+          password: hashedPassword,
+          profile: {
+            create: {
+              description: '',
+              username: username,
+            },
           },
         },
-      },
-    });
-    return { message: 'user created' };
+      });
+      return { message: 'user created' };
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        throw new BadRequestException(error.formErrors.fieldErrors);
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('User already exists');
+      }
+      throw new BadRequestException('Invalid data');
+    }
   }
 
   async findAll() {
@@ -69,16 +76,29 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    if (!id) throw new BadRequestException();
-    return await this.prismaService.user.update({
-      where: {
-        id,
-      },
-      data: {
-        email: updateUserDto.email,
-        password: updateUserDto.password,
-      },
-    });
+    try {
+      const {
+        data: { email, password },
+      } = updateUserSchema.safeParse(updateUserDto);
+      if (!id) throw new BadRequestException();
+      return await this.prismaService.user.update({
+        where: {
+          id,
+        },
+        data: {
+          email: email,
+          password: password,
+        },
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        throw new BadRequestException(error.formErrors.fieldErrors);
+      }
+      if (error instanceof ConflictException) {
+        throw new ConflictException('User already exists');
+      }
+      throw new BadRequestException('Invalid data');
+    }
   }
 
   async remove(id: string) {

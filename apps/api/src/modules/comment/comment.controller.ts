@@ -11,14 +11,13 @@ import {
 } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { RequestUser } from 'src/types';
 
 @Controller('comment')
 export class CommentController {
-  constructor(private readonly commentService: CommentService) { }
+  constructor(private readonly commentService: CommentService) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
@@ -39,7 +38,7 @@ export class CommentController {
   @UseGuards(AuthGuard('jwt'))
   update(
     @Param('id') id: string,
-    @Body() updateCommentDto: UpdateCommentDto,
+    @Body() updateCommentDto: CreateCommentDto,
     @Req() req: Request,
   ) {
     const user = req.user as unknown as RequestUser;

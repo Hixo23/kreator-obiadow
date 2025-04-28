@@ -15,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
-import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
@@ -61,7 +60,7 @@ export class RecipesController {
   @UseInterceptors(FileInterceptor('file'))
   update(
     @Param('id') id: string,
-    @Body() updateRecipeDto: UpdateRecipeDto,
+    @Body() updateRecipeDto: CreateRecipeDto,
     @UploadedFile(
       new ParseFilePipeBuilder().build({
         fileIsRequired: false,

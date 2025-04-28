@@ -1,6 +1,11 @@
+import { z } from 'zod';
 
-export class UpdateProfileDto {
-  readonly username: string;
-  readonly description: string;
-}
+export const updateProfileSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters long')
+    .optional(),
+  description: z.string().optional(),
+});
 
+export type UpdateProfileDto = z.infer<typeof updateProfileSchema>;

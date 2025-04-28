@@ -1,12 +1,11 @@
 import {
   BadRequestException,
   Injectable,
-  Logger,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { LoginDto } from './dto/login.dto';
+import { LoginDto, loginSchema } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { RequestUser } from 'src/types';
@@ -16,32 +15,43 @@ export class AuthService {
   constructor(
     private readonly prismaService: PrismaService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
-  async validateUser({ email, password }: LoginDto) {
-    if (!email || !password) throw new BadRequestException("Brakuje danych");
+  async validateUser(unparsedData: LoginDto) {
+    try {
+      const {
+        data: { email, password },
+      } = loginSchema.safeParse(unparsedData);
+      const user = await this.prismaService.user.findFirst({
+        where: {
+          email: email,
+        },
+        include: {
+          profile: {
+            include: {
+              comments: true,
+              recipes: true,
+            },
+          },
+        },
+      });
 
-    const user = await this.prismaService.user.findFirst({
-      where: {
-        email: email,
-      },
-      include: {
-        profile: {
-          include: {
-            comments: true,
-            recipes: true
-          }
-        }
+      if (!user)
+        throw new NotFoundException(
+          'Nie znaleziono użytkownika z takim mailem!',
+        );
+
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordCorrect) throw new UnauthorizedException('Błędne dane');
+
+      return user;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new UnauthorizedException('Invalid credentials');
       }
-    });
-
-    if (!user) throw new NotFoundException("Nie znaleziono użytkownika z takim mailem!");
-
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordCorrect) throw new UnauthorizedException("Błędne dane");
-
-    return user;
+      throw new BadRequestException('Invalid data');
+    }
   }
 
   async login(user: RequestUser) {
@@ -61,8 +71,8 @@ export class AuthService {
         id: user.profile.id,
         username: user.profile.username,
         recipes: user.profile.recipes,
-        comments: user.profile.comments
-      }
+        comments: user.profile.comments,
+      },
     };
   }
 }

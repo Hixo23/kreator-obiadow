@@ -1,11 +1,15 @@
-export class CreateRecipeDto {
-  readonly name: string;
-  readonly description: string;
-  readonly preparationProcess: string;
-  readonly ingredients: string;
-  readonly dietType: string;
-  readonly difficulty: string;
-  readonly authorId: string;
-  readonly preparationTime: number;
-  readonly servings: number;
-}
+import { z } from 'zod';
+
+export const CreateRecipeSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+  preparationProcess: z.string(),
+  ingredients: z.string(),
+  dietType: z.string(),
+  difficulty: z.string(),
+  authorId: z.string(),
+  preparationTime: z.number(),
+  servings: z.number(),
+});
+
+export type CreateRecipeDto = z.infer<typeof CreateRecipeSchema>;

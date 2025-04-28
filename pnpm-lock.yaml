@@ -80,6 +80,9 @@ importers:
       streamifier:
         specifier: ^0.1.1
         version: 0.1.1
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@nestjs/cli':
         specifier: ^11.0.5
